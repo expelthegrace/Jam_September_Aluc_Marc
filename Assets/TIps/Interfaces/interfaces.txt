@@ -1,9 +1,0 @@
-Capa que cubreix les fucions que defineixis al my_interface.cs. 
-Quan es cridi una funcio d'una interface, per exemple ITakeDamage.TakeDamage(3), executara la funcio TakeDamage() del objecte concret.
-
-Serveix per:
-Cridar la funcio amb el mateix nom de varios objectes pero que no fan la mateixa funcio.
-
-Exemple:
-Tens una pistola que fa mal a l'objecte amb qui fa raycast collision. Cada objecte pot fer coses diferents en quan li crides la seva TakeDamage(),
-pero no vols fer una funcio TakeDamage() amb un switch del pal switch(typeofobject)
