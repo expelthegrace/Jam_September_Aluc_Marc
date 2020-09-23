@@ -1,0 +1,15 @@
+public class OlaQueTal
+{
+
+	private string  _nameFile;
+	public string NameFile {get; set;}
+
+	public string namePersona
+	
+	
+	void int Count()
+	{
+		int contadorPrincipal = 3;
+	}
+
+}
