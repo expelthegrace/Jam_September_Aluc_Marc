@@ -12,6 +12,8 @@ public class BasicState : EnemyState
     [SerializeField] private float mTimeToTurn = 1;
     [SerializeField] protected float mSpeed = 0.55f;
 
+    protected BulletSpawner mSpawner;
+
     protected float mTimeStateActive;
     protected float mTimeStateActivated;
 
@@ -24,10 +26,20 @@ public class BasicState : EnemyState
 
     protected void BasicStart()
     {
+        mSpawner = (BulletSpawner)FindObjectOfType(typeof(BulletSpawner));
+
         mLastTurn = Time.time;
         mTimeStateActivated = Time.time;
         Assert.AreNotEqual(gameObject, null);
         mRigidBody = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            mSpawner.SpawnBullet(transform.position, transform.rotation);//TODO from nose
+        }
     }
 
     public override EnemyState StateUpdate()
