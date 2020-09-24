@@ -9,11 +9,14 @@ public class StateManager : MonoBehaviour
     private EnemyState mCurrentState = null;
 
     //Declare the states here
-    private EnemyState mBasicState = null;
+    private BasicState mBasicState = null;
+    private DivideShotState mDivideShotState = null;
 
     void Start()
     {
         mBasicState = gameObject.AddComponent<BasicState>();
+        mDivideShotState = gameObject.AddComponent<DivideShotState>();
+
         GoToState(mBasicState);
     }
 
@@ -23,6 +26,10 @@ public class StateManager : MonoBehaviour
 
         if (mCurrentState != null)
             stateReturn = mCurrentState.StateUpdate();
+
+        if (stateReturn != null)
+            GoToState(stateReturn);
+        
     }
 
     private void FixedUpdate()
