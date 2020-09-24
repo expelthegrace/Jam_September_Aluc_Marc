@@ -8,4 +8,10 @@ public static class StaticFunctions
     {
         return Quaternion.Euler(0, 0, degrees) * v;
     }
+
+    public static Quaternion Get2DQuaternionFromDirection(Vector3 aDirection)
+    {
+        var angle = Mathf.Atan2(aDirection.y, aDirection.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
 }
