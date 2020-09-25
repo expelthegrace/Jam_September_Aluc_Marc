@@ -7,17 +7,24 @@ public class BasicState : EnemyState
 {
     private Rigidbody2D mRigidBody;
 
-    [Header("Movement settings")]
+    //Movement
     private float mLastTurn;
+    [Header("Movement settings")]
     [SerializeField] private float mTimeBetweenTurns = 2;
     [SerializeField] private float mTimeToTurn = 1;
     [SerializeField] protected float mSpeed = 0.55f;
     [SerializeField] protected float mTurnAngle = 140;
 
+    //Shooting
     [Header("Shooting settings")]
     [SerializeField] private float mAngleBetweenCanons = 20f;
     [SerializeField] private int mNumberOfExtraCanons = 2;
     [SerializeField] private float mCanonDistance = 0.6f;
+
+    private float mLastTimeShooted;
+    [SerializeField] protected float mTimeBetweenShooting = 2f;
+    [SerializeField] protected float mTimeBetweenBullet = 0.2f;
+    [SerializeField] protected int mBulletsPerShooting = 4;
 
     protected BulletSpawner mSpawner;
 
@@ -27,6 +34,8 @@ public class BasicState : EnemyState
     public override void HandleStart()
     {
         Debug.Log("BasicState");
+        mDurationTime = 5f;
+        mStateID = 0;
         BasicStart();      
     }
 
@@ -36,6 +45,7 @@ public class BasicState : EnemyState
 
         mLastTurn = Time.time;
         mTimeStateActivated = Time.time;
+        mLastTimeShooted = Time.time;
         Assert.AreNotEqual(gameObject, null);
         mRigidBody = gameObject.GetComponent<Rigidbody2D>();
     }
@@ -46,18 +56,19 @@ public class BasicState : EnemyState
         mTimeStateActive = Time.time - mTimeStateActivated;
 
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-           // mSpawner.SpawnBullet(transform.position, transform.rotation);//TODO from nose
-            FanShoot();
-        }
+            mSpawner.SpawnBullet(transform.position, transform.rotation);//TODO from nose
+
+        ShootingManager();
+
+        if (mTimeStateActive > mDurationTime)
+            return GetRandomState();
 
         return null;
     }
 
     public override void StateFixedUpdate()
     {
-        Move();
-        //Shoot();
+        Move();     
     }
 
     protected void Move()
@@ -72,6 +83,7 @@ public class BasicState : EnemyState
         }
     }
 
+
     private IEnumerator Turn(float aAngle, float aTime)
     {
         float startTime = Time.time;
@@ -84,6 +96,15 @@ public class BasicState : EnemyState
      
             yield return null;
         }             
+    }
+
+    protected void ShootingManager()
+    {
+        if (Time.time - mLastTimeShooted > mTimeBetweenShooting)
+        {
+            mLastTimeShooted = Time.time;
+            StartCoroutine(ShootBurst());
+        }
     }
 
     private void FanShoot()
@@ -109,5 +130,41 @@ public class BasicState : EnemyState
             Vector3 direction3 = new Vector3(direction.x, direction.y, 0f);
             mSpawner.SpawnBullet(transform.position + direction3 * mCanonDistance, direction3);
         }          
+    }
+    
+    private IEnumerator ShootBurst()
+    {
+        float shootedTime = Time.time;
+        int bulletsShooted = 0;
+        while (bulletsShooted < mBulletsPerShooting)
+        {
+            if (Time.time - shootedTime > mTimeBetweenBullet)
+            {
+                shootedTime = Time.time;
+                FanShoot();
+                ++bulletsShooted;
+            }           
+            yield return null;
+        }
+    }
+
+    protected virtual EnemyState GetRandomState()
+    {
+        EnemyState returnState = this;
+        int state = mStateID;
+        while (state == mStateID && StateManager.mNUmberOfEnemyStates > 1)
+            state = Random.Range(0, StateManager.mNUmberOfEnemyStates);
+
+        Debug.Log("go to: " + state);
+
+        switch(state)
+        {
+            case 0:
+                return gameObject.GetComponent<BasicState>();
+            case 1:
+                return gameObject.GetComponent<DivideShotState>();
+        }
+
+        return null;
     }
 }

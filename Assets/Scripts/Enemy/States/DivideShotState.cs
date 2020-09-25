@@ -7,6 +7,8 @@ public class DivideShotState : BasicState
     public override void HandleStart()
     {
         Debug.Log("DivideState");
+        mDurationTime = 5f;
+        mStateID = 1;
         base.BasicStart();
     }
 
@@ -14,7 +16,11 @@ public class DivideShotState : BasicState
     {
         mTimeStateActive = Time.time - mTimeStateActivated;
 
-        //if (mTimeStateActive > 3) return gameObject.GetComponent<BasicState>();
+        if (mTimeStateActive > mDurationTime)
+        {
+            Debug.Log("Change State");
+            return GetRandomState();
+        }
 
         return null;
     }
@@ -22,7 +28,7 @@ public class DivideShotState : BasicState
     public override void StateFixedUpdate()
     {
         base.Move();
-        //New Shot();      
+        base.ShootingManager();      
     }
 
 }

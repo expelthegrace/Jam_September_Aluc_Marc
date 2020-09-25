@@ -9,6 +9,7 @@ public class StateManager : MonoBehaviour
     private EnemyState mCurrentState = null;
 
     //Declare the states here
+    static public int mNUmberOfEnemyStates = 2;
     private BasicState mBasicState = null;
     private DivideShotState mDivideShotState = null;
 
