@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour
     protected Vector3 GetObstacleNormal(Collision2D aCollision)
     {
         Vector3 normal = Vector3.zero;
-        if (aCollision.gameObject.tag == ObstacleTag)
+        if (aCollision.gameObject.CompareTag(ObstacleTag))
         {
             List<ContactPoint2D> contacts = new List<ContactPoint2D>();
             if (aCollision.GetContacts(contacts) > 0)
