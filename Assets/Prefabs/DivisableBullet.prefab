@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSpeed: 2
+  mMinBouncesToDestroy: 3
+  mMaxBouncesToDestroy: 10
+  mSameVectorAngle: 10
 --- !u!1001 &2621606955126651691
 PrefabInstance:
   m_ObjectHideFlags: 0
