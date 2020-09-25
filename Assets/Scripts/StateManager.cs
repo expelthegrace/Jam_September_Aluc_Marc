@@ -7,6 +7,10 @@ public class StateManager : MonoBehaviour
 {
 
     private EnemyState mCurrentState = null;
+    public EnemyState CurrentState
+    {
+        get { return mCurrentState; }
+    }
 
     //Declare the states here
     static public int mNUmberOfEnemyStates = 2;

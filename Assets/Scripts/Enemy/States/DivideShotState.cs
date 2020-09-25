@@ -8,6 +8,7 @@ public class DivideShotState : BasicState
     {
         Debug.Log("DivideState");
         mDurationTime = 5f;
+        nameState = "Dividing shots";
         mStateID = 1;
         base.BasicStart();
     }

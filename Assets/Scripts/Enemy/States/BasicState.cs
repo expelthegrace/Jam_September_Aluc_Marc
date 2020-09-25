@@ -34,7 +34,9 @@ public class BasicState : EnemyState
     public override void HandleStart()
     {
         Debug.Log("BasicState");
+
         mDurationTime = 5f;
+        nameState = "Normal mode";
         mStateID = 0;
         BasicStart();      
     }
@@ -43,12 +45,16 @@ public class BasicState : EnemyState
     {
         mSpawner = (BulletSpawner)FindObjectOfType(typeof(BulletSpawner));
         mSpawner.Emitter = gameObject;
+
+        mOnEnemyStateChanged.Invoke();
+
         mLastTurn = Time.time;
         mTimeStateActivated = Time.time;
         mLastTimeShooted = Time.time;
         Assert.AreNotEqual(gameObject, null);
         mRigidBody = gameObject.GetComponent<Rigidbody2D>();
     }
+
 
     //Use this instead of Update() Nota: no se com fer que els fills no puguin veure Update(), deu ser impossible si hereden de MonoBehaviour
     public override EnemyState StateUpdate()
@@ -154,8 +160,6 @@ public class BasicState : EnemyState
         int state = mStateID;
         while (state == mStateID && StateManager.mNUmberOfEnemyStates > 1)
             state = Random.Range(0, StateManager.mNUmberOfEnemyStates);
-
-        Debug.Log("go to: " + state);
 
         switch(state)
         {
