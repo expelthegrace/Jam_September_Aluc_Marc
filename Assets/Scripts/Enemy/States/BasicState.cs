@@ -48,6 +48,7 @@ public class BasicState : EnemyState
         mSpawner = (BulletSpawner)FindObjectOfType(typeof(BulletSpawner));
         mSpawner.Emitter = gameObject;
 
+        
         mOnEnemyStateChanged.Invoke();
 
         mLastTurn = Time.time;
