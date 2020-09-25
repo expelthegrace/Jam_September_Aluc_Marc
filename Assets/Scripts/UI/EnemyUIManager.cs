@@ -58,7 +58,6 @@ public class EnemyUIManager : MonoBehaviour
         if (mGameManager.CurrentGameState == GameManagerSC.GameState.Playing)
         {
             scoreText.text = BeautyScore(mGameManager.score).ToString();
-
         }
        
     }

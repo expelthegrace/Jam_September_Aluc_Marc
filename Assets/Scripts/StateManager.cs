@@ -28,6 +28,7 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
+        if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState != GameManagerSC.GameState.Playing) return;
         EnemyState stateReturn = null;
 
         if (mCurrentState != null)
@@ -40,6 +41,7 @@ public class StateManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState != GameManagerSC.GameState.Playing) return;
         if (mCurrentState != null)
             mCurrentState.StateFixedUpdate();
     }
