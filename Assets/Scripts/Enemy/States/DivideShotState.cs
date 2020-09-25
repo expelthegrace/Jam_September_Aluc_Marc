@@ -7,8 +7,8 @@ public class DivideShotState : BasicState
     public override void HandleStart()
     {
         Debug.Log("DivideState");
-        mDurationTime = 5f;
-        nameState = "Dividing shots";
+        mDurationTime = 8f;
+        nameState = "Dividing Shots";
         mStateID = 1;
         base.BasicStart();
     }

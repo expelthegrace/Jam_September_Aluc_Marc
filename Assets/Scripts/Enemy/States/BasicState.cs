@@ -35,8 +35,8 @@ public class BasicState : EnemyState
     {
         Debug.Log("BasicState");
 
-        mDurationTime = 5f;
-        nameState = "Normal mode";
+        mDurationTime = 15f;
+        nameState = "Normal Mode";
         mStateID = 0;
         BasicStart();      
     }
