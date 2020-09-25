@@ -18,10 +18,10 @@ public class GameManagerSC : MonoBehaviour
     private GameManagerSC mGmReference;
     public  GameManagerSC GmRegerence { get { return mGmReference; } }
 
-    private GameState mCurrentState;
-    public GameState CurrentState
+    private GameState mCurrentGameState;
+    public GameState CurrentGameState
     {
-        get { return mCurrentState; }
+        get { return mCurrentGameState; }
     }
 
     void Awake()
@@ -33,17 +33,31 @@ public class GameManagerSC : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        mCurrentState = GameState.Playing;
+    public void Start()
+    {       
+        mCurrentGameState = GameState.Playing;
         score = 0;
     }
 
     public void GoToGameState(GameState aGameState)
     {
-        mCurrentState = aGameState;
+        if (aGameState == mCurrentGameState) return;
+        mCurrentGameState = aGameState;
         mOnGameStateChanged.Invoke();
     }
 
-   
+    //Only for test
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            GoToGameState(GameState.Playing);
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            GoToGameState(GameState.NotPlaying);
+        }
+    }
+
+
 }
