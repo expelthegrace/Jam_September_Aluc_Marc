@@ -12,7 +12,7 @@ public class DividableBullet : Bullet
     // Start is called before the first frame update
     void Start()
     {
-        
+        mBouncesToDestroy = 1;
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class DividableBullet : Bullet
                 Spawner.SpawnBullet(transform.position, Reflection);
                 Spawner.SpawnBullet(transform.position, -transform.right);
             }
-            Destroy(this.gameObject);
+            UpdateBounces();
         }
     }
 }
