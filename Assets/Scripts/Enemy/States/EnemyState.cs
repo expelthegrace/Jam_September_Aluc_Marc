@@ -13,6 +13,5 @@ public class EnemyState : MonoBehaviour
 
     //Fixed Update for the states. Use this instead of FixedUpdate()
     public virtual void StateFixedUpdate() {}
- 
    
 }

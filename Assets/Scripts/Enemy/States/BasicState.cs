@@ -20,8 +20,7 @@ public class BasicState : EnemyState
     public override void HandleStart()
     {
         Debug.Log("BasicState");
-        BasicStart();
-      
+        BasicStart();      
     }
 
     protected void BasicStart()
@@ -34,19 +33,15 @@ public class BasicState : EnemyState
         mRigidBody = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            mSpawner.SpawnBullet(transform.position, transform.rotation);//TODO from nose
-        }
-    }
-
+    //Use this instead of Update() Nota: no se com fer que els fills no puguin veure Update(), deu ser impossible si hereden de MonoBehaviour
     public override EnemyState StateUpdate()
     {
         mTimeStateActive = Time.time - mTimeStateActivated;
 
-        if (mTimeStateActive > 3) return gameObject.GetComponent<DivideShotState>();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            mSpawner.SpawnBullet(transform.position, transform.rotation);//TODO from nose
+        }
 
         return null;
     }
