@@ -20,12 +20,19 @@ public class BulletSpawner: MonoBehaviour
 
     }
 
-    public void SpawnBullet(Vector3 aPosition, Vector3 aDirection)
+    public void SpawnBullet(GameObject aEmitter, Vector3 aPosition, Vector3 aDirection)
     {
-        Instantiate(mBulletPrefab, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
+        GameObject bullet = Instantiate(mBulletPrefab, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
+        IgnoreCollision(aEmitter, bullet);
     }
-    public void SpawnBullet(Vector3 aPosition, Quaternion aRotation)
+    public void SpawnBullet(GameObject aEmitter, Vector3 aPosition, Quaternion aRotation)
     {
-        Instantiate(mBulletPrefab, aPosition, aRotation);
+        GameObject bullet = Instantiate(mBulletPrefab, aPosition, aRotation);
+        IgnoreCollision(aEmitter, bullet);
+    }
+
+    private void IgnoreCollision(GameObject aEmitter, GameObject aBulletObject)
+    {
+        Physics2D.IgnoreCollision(aEmitter.GetComponent<Collider2D>(), aBulletObject.GetComponent<Collider2D>());
     }
 }
