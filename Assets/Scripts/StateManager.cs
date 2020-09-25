@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class StateManager : MonoBehaviour
 {
+    public GameObject mGameManager;
 
     private EnemyState mCurrentState = null;
     public EnemyState CurrentState
@@ -24,6 +24,7 @@ public class StateManager : MonoBehaviour
 
         GoToState(mBasicState);
     }
+
 
     void Update()
     {
@@ -49,6 +50,7 @@ public class StateManager : MonoBehaviour
             mCurrentState.HandleExit();
         mCurrentState = aNewEnemyState;
         mCurrentState.HandleStart();
+
     }
 
  

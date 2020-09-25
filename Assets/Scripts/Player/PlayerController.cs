@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         if (aCollision.gameObject.tag == BulletTag)
         {
-            Debug.Log("RIP");
+           // Debug.Log("RIP");
         }
     }
 }

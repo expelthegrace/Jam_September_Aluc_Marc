@@ -32,7 +32,7 @@ public class BasicState : EnemyState
     protected float mTimeStateActive;
     protected float mTimeStateActivated;
 
-    private bool mEarlyInvoked = false;
+    private bool mEarlyInvoked;
     //Depending on the order of the starts of the scripts, certains events are declared after the eventListeners and dont get triggered at the start
     //So this function is called in the first Update, when all the starts are been called
     private void EarlyEventInvoke() 
@@ -45,7 +45,7 @@ public class BasicState : EnemyState
     {
         Debug.Log("BasicState");
 
-        mDurationTime = 15f;
+        mDurationTime = 5f;
         nameState = "Normal Mode";
         mStateID = 0;
         mBulletType = BulletSpawner.eBulletType.Normal;
@@ -54,9 +54,10 @@ public class BasicState : EnemyState
 
     protected void BasicStart()
     {
+        mEarlyInvoked = false;
         mSpawner = (BulletSpawner)FindObjectOfType(typeof(BulletSpawner));
         mSpawner.Emitter = gameObject;
-
+        mOnEnemyStateChanged.Invoke();
         mLastTurn = Time.time;
         mTimeStateActivated = Time.time;
         mLastTimeShooted = Time.time;
@@ -68,7 +69,8 @@ public class BasicState : EnemyState
     //Use this instead of Update() Nota: no se com fer que els fills no puguin veure Update(), deu ser impossible si hereden de MonoBehaviour
     public override EnemyState StateUpdate()
     {
-        EarlyEventInvoke();
+
+        if (!mEarlyInvoked) EarlyEventInvoke();
 
         mTimeStateActive = Time.time - mTimeStateActivated;
 

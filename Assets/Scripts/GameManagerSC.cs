@@ -21,7 +21,7 @@ public class GameManagerSC : MonoBehaviour
     private GameState mCurrentGameState;
     public GameState CurrentGameState
     {
-        get { return mCurrentGameState; }
+        get { return mCurrentGameState; }     
     }
 
     private bool mEarlyInvoked = false;
@@ -42,7 +42,7 @@ public class GameManagerSC : MonoBehaviour
 
     public void Start()
     {       
-        GoToGameState(GameState.NotPlaying);
+        GoToGameState(GameState.Playing);
         score = 0;
     }
 
@@ -50,6 +50,7 @@ public class GameManagerSC : MonoBehaviour
     {
         if (aGameState == mCurrentGameState) return;
         mCurrentGameState = aGameState;
+        mOnGameStateChanged.Invoke();
     }
 
     //Only for test

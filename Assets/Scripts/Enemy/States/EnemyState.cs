@@ -23,6 +23,6 @@ public class EnemyState : MonoBehaviour
     public virtual void StateFixedUpdate() {}
 
     public static UnityEvent mOnEnemyStateChanged = new UnityEvent();
-
+   
 
 }

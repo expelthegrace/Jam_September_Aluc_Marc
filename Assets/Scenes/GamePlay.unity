@@ -231,7 +231,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1948700745}
-  - {fileID: 918030632}
   - {fileID: 145836997}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -248,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d441566c942444644a25c808655d2349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mGameManager: {fileID: 1413287091}
 --- !u!50 &76858899
 Rigidbody2D:
   serializedVersion: 4
@@ -801,7 +801,7 @@ Transform:
   m_LocalScale: {x: 0.2375, y: 0.2375, z: 1}
   m_Children: []
   m_Father: {fileID: 76858897}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &145836998
 SpriteRenderer:

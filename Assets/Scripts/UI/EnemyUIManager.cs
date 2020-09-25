@@ -65,7 +65,6 @@ public class EnemyUIManager : MonoBehaviour
 
     private void StartCountdownnImage()
     {
-        
         StopCoroutine(UpdateCountdownImage());
         StartCoroutine(UpdateCountdownImage());
        
