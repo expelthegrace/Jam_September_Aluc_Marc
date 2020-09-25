@@ -1,17 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShieldManager : MonoBehaviour
 {
-    [SerializeField] private GameObject mPrefab;
+    [SerializeField] private GameObject mPrefab = null;
+
+    [Header("Shield parts settings")]
     [SerializeField] private float mRadiusFromGameObject = 0.2f;
     [SerializeField] private int mPartsNum = 8;
+
+    [Header("Cooldown settings")]
+    [SerializeField] public float mCooldownSeconds = 4.0f;
+    private bool mCooldownTimeout = false;
+
+    public static UnityEvent EventShieldCooldownStarted = new UnityEvent();
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartShieldCooldown();
+    }
+
+    private void StartShieldCooldown()
+    {
+        mCooldownTimeout = false;
+        StopCoroutine(UpdateCooldown());
+        StartCoroutine(UpdateCooldown());
+        EventShieldCooldownStarted.Invoke();
+    }
+
+    private IEnumerator UpdateCooldown()
+    {
+        float startTime = Time.time;
+        while (Time.time - startTime <= mCooldownSeconds)
+        {
+            yield return null;
+        }
+        mCooldownTimeout = true;
     }
 
     // Update is called once per frame
@@ -27,11 +54,13 @@ public class ShieldManager : MonoBehaviour
                 GameObject shieldPart = Instantiate(mPrefab, gameObject.transform.position + offset, Quaternion.identity);
                 shieldPart.transform.parent = gameObject.transform;
             }
+
+            StartShieldCooldown();
         }
     }
 
     private bool CanGenerateShield()
     {
-        return Input.GetKeyDown(KeyCode.Y);
+        return Input.GetKeyDown(KeyCode.Y) && mCooldownTimeout;
     }
 }
