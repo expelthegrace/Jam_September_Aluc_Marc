@@ -29,8 +29,8 @@ public class EnemyUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mEnemyStateManager = mEnemy.GetComponent<StateManager>();       
-       
+        mEnemyStateManager = mEnemy.GetComponent<StateManager>();
+
         EnemyState.mOnEnemyStateChanged.AddListener(StartCountdownnImage);
         GameManagerSC.mOnGameStateChanged.AddListener(GameStateChanged);
 
@@ -65,7 +65,7 @@ public class EnemyUIManager : MonoBehaviour
 
     private void StartCountdownnImage()
     {
-        Debug.Log("fff");
+        
         StopCoroutine(UpdateCountdownImage());
         StartCoroutine(UpdateCountdownImage());
        

@@ -24,6 +24,13 @@ public class GameManagerSC : MonoBehaviour
         get { return mCurrentGameState; }
     }
 
+    private bool mEarlyInvoked = false;
+    private void EarlyEventInvoke()
+    {
+        mOnGameStateChanged.Invoke();
+        mEarlyInvoked = true;
+    }
+
     void Awake()
     {
         if (GmRegerence != null)
@@ -35,7 +42,7 @@ public class GameManagerSC : MonoBehaviour
 
     public void Start()
     {       
-        mCurrentGameState = GameState.Playing;
+        GoToGameState(GameState.NotPlaying);
         score = 0;
     }
 
@@ -43,12 +50,13 @@ public class GameManagerSC : MonoBehaviour
     {
         if (aGameState == mCurrentGameState) return;
         mCurrentGameState = aGameState;
-        mOnGameStateChanged.Invoke();
     }
 
     //Only for test
     public void Update()
     {
+        if (!mEarlyInvoked) EarlyEventInvoke();
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             GoToGameState(GameState.Playing);
