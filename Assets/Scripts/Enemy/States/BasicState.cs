@@ -7,10 +7,16 @@ public class BasicState : EnemyState
 {
     private Rigidbody2D mRigidBody;
 
+    [Header("Movement settings")]
     private float mLastTurn;
     [SerializeField] private float mTimeBetweenTurns = 2;
     [SerializeField] private float mTimeToTurn = 1;
     [SerializeField] protected float mSpeed = 0.55f;
+
+    [Header("Shooting settings")]
+    [SerializeField] private float mAngleBetweenCanons = 20f;
+    [SerializeField] private int mNumberOfExtraCanons = 2;
+    [SerializeField] private float mCanonDistance = 0.6f;
 
     protected BulletSpawner mSpawner;
 
@@ -40,7 +46,8 @@ public class BasicState : EnemyState
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            mSpawner.SpawnBullet(transform.position, transform.rotation);//TODO from nose
+           // mSpawner.SpawnBullet(transform.position, transform.rotation);//TODO from nose
+            FanShoot();
         }
 
         return null;
@@ -60,8 +67,7 @@ public class BasicState : EnemyState
         if (Time.time - mLastTurn > mTimeBetweenTurns)
         {
             mLastTurn = Time.time;
-            StartCoroutine(Turn(Random.Range(-100,100), mTimeToTurn));
-            
+            StartCoroutine(Turn(Random.Range(-100,100), mTimeToTurn));           
         }
     }
 
@@ -77,5 +83,30 @@ public class BasicState : EnemyState
      
             yield return null;
         }             
+    }
+
+    private void FanShoot()
+    {     
+        List<Vector2> canonDirections = new List<Vector2>();
+
+        Vector2 centralVector = transform.right;
+        canonDirections.Add(centralVector);
+
+        Vector2 canonTemp;
+
+        for (int i = 0; i < mNumberOfExtraCanons / 2; ++i)
+        {
+            canonTemp = StaticFunctions.RotateVector2(centralVector, mAngleBetweenCanons * (i + 1));
+            canonDirections.Add(canonTemp.normalized);
+            canonTemp = StaticFunctions.RotateVector2(centralVector, -mAngleBetweenCanons * (i + 1));
+            canonDirections.Add(canonTemp.normalized);
+        }
+
+        foreach(Vector2 direction in canonDirections)
+        {
+            //Debug.DrawRay(transform.position, direction, Color.yellow,2f);
+            Vector3 direction3 = new Vector3(direction.x, direction.y, 0f);
+            mSpawner.SpawnBullet(transform.position + direction3 * mCanonDistance, direction3);
+        }          
     }
 }
