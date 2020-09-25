@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        mRigidBody.velocity = new Vector3(horizontal * mSpeed, vertical * mSpeed, 0.0f);
+        float speed = Input.GetKey(KeyCode.LeftShift) ? mSpeed * 0.5f : mSpeed;
+        mRigidBody.velocity = new Vector3(horizontal * speed, vertical * speed, 0.0f);
     }
 
     void OnCollisionEnter2D(Collision2D aCollision)
