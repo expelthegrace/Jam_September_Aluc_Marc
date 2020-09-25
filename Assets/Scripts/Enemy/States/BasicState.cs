@@ -12,6 +12,7 @@ public class BasicState : EnemyState
     [SerializeField] private float mTimeBetweenTurns = 2;
     [SerializeField] private float mTimeToTurn = 1;
     [SerializeField] protected float mSpeed = 0.55f;
+    [SerializeField] protected float mTurnAngle = 140;
 
     [Header("Shooting settings")]
     [SerializeField] private float mAngleBetweenCanons = 20f;
@@ -67,7 +68,7 @@ public class BasicState : EnemyState
         if (Time.time - mLastTurn > mTimeBetweenTurns)
         {
             mLastTurn = Time.time;
-            StartCoroutine(Turn(Random.Range(-100,100), mTimeToTurn));           
+            StartCoroutine(Turn(Random.Range(-mTurnAngle, mTurnAngle), mTimeToTurn));           
         }
     }
 
