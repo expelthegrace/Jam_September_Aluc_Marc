@@ -42,7 +42,7 @@ public class BasicState : EnemyState
     protected void BasicStart()
     {
         mSpawner = (BulletSpawner)FindObjectOfType(typeof(BulletSpawner));
-
+        mSpawner.Emitter = gameObject;
         mLastTurn = Time.time;
         mTimeStateActivated = Time.time;
         mLastTimeShooted = Time.time;
@@ -56,7 +56,7 @@ public class BasicState : EnemyState
         mTimeStateActive = Time.time - mTimeStateActivated;
 
         if (Input.GetKeyDown(KeyCode.Space))
-            mSpawner.SpawnBullet(gameObject, transform.position, transform.rotation);//TODO from nose
+            mSpawner.SpawnDividableBullet(transform.position, transform.rotation);//TODO from nose
 
         ShootingManager();
 
@@ -128,7 +128,7 @@ public class BasicState : EnemyState
         {
             //Debug.DrawRay(transform.position, direction, Color.yellow,2f);
             Vector3 direction3 = new Vector3(direction.x, direction.y, 0f);
-            mSpawner.SpawnBullet(gameObject, transform.position + direction3 * mCanonDistance, direction3);
+            //mSpawner.SpawnBullet(transform.position + direction3 * mCanonDistance, direction3);
         }          
     }
     

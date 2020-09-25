@@ -7,6 +7,9 @@ public class BulletSpawner: MonoBehaviour
     //TODO pool of bullets
 
     public GameObject mBulletPrefab;
+    public GameObject mDividableBulletPrefab;
+
+    public GameObject Emitter { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -20,19 +23,34 @@ public class BulletSpawner: MonoBehaviour
 
     }
 
-    public void SpawnBullet(GameObject aEmitter, Vector3 aPosition, Vector3 aDirection)
+    public void SpawnBullet(Vector3 aPosition, Vector3 aDirection)
     {
         GameObject bullet = Instantiate(mBulletPrefab, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
-        IgnoreCollision(aEmitter, bullet);
-    }
-    public void SpawnBullet(GameObject aEmitter, Vector3 aPosition, Quaternion aRotation)
-    {
-        GameObject bullet = Instantiate(mBulletPrefab, aPosition, aRotation);
-        IgnoreCollision(aEmitter, bullet);
+        IgnoreCollision(bullet);
     }
 
-    private void IgnoreCollision(GameObject aEmitter, GameObject aBulletObject)
+    public void SpawnBullet(Vector3 aPosition, Quaternion aRotation)
     {
-        Physics2D.IgnoreCollision(aEmitter.GetComponent<Collider2D>(), aBulletObject.GetComponent<Collider2D>());
+        GameObject bullet = Instantiate(mBulletPrefab, aPosition, aRotation);
+        IgnoreCollision(bullet);
+    }
+
+    public void SpawnDividableBullet(Vector3 aPosition, Vector3 aDirection)
+    {
+        GameObject bullet = Instantiate(mDividableBulletPrefab, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
+        bullet.GetComponent<DividableBullet>().Spawner = this;
+        IgnoreCollision(bullet);
+    }
+
+    public void SpawnDividableBullet(Vector3 aPosition, Quaternion aRotation)
+    {
+        GameObject bullet = Instantiate(mDividableBulletPrefab, aPosition, aRotation);
+        bullet.GetComponent<DividableBullet>().Spawner = this;
+        IgnoreCollision(bullet);
+    }
+
+    private void IgnoreCollision(GameObject aBulletObject)
+    {
+        Physics2D.IgnoreCollision(Emitter.GetComponent<Collider2D>(), aBulletObject.GetComponent<Collider2D>());
     }
 }

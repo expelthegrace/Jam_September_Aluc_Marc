@@ -20,15 +20,30 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D aCollision)
     {
+        Vector3 Normal = GetObstacleNormal(aCollision);
+        if (Normal != Vector3.zero)
+        {
+            Vector3 Reflection = StaticFunctions.GetReflectionVector(transform.right, Normal);
+            transform.rotation = StaticFunctions.Get2DQuaternionFromDirection(Reflection);
+        }
+    }
+
+    /**
+     *  Gets the normal of the obstacle type game object from a collision. 
+     *  Zero if no collision with an obstacle has occured.
+     */
+    protected Vector3 GetObstacleNormal(Collision2D aCollision)
+    {
+        Vector3 normal = Vector3.zero;
         if (aCollision.gameObject.tag == ObstacleTag)
         {
             List<ContactPoint2D> contacts = new List<ContactPoint2D>();
             if (aCollision.GetContacts(contacts) > 0)
             {
-                Vector3 Normal = contacts[0].normal;
-                Vector3 Reflection = transform.right - 2 * (Vector3.Dot(transform.right, Normal)) * Normal;
-                transform.rotation = StaticFunctions.Get2DQuaternionFromDirection(Reflection);
+                normal = contacts[0].normal;
+              
             }
         }
+        return normal;
     }
 }
