@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 76858897}
   - component: {fileID: 76858898}
   - component: {fileID: 76858899}
+  - component: {fileID: 76858900}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -230,7 +231,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1948700745}
-  - {fileID: 918030632}
   - {fileID: 145836997}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -268,6 +268,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &76858900
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76858896}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &101607102
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +726,7 @@ Transform:
   m_LocalScale: {x: 0.2375, y: 0.2375, z: 1}
   m_Children: []
   m_Father: {fileID: 76858897}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &145836998
 SpriteRenderer:
@@ -2892,6 +2908,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mBulletPrefab: {fileID: 5157292840481545364, guid: 8f6d2c629342027498d1531a315de583,
+    type: 3}
+  mDividableBulletPrefab: {fileID: 7202297184662136767, guid: be896065eed16fd4ab2a372523aaa55f,
     type: 3}
 --- !u!1 &1864351230
 GameObject:
