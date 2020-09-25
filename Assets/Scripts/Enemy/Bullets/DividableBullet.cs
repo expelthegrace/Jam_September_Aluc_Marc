@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 public class DividableBullet : Bullet
 {
-    public BulletSpawner Spawner { get; set; }
 
     [SerializeField] private float mSameVectorAngle = 10.0f;
 
@@ -23,16 +22,17 @@ public class DividableBullet : Bullet
         {
             Assert.AreNotEqual(Spawner, null);
 
+            BulletSpawner.eBulletType newBulletType = BulletSpawner.eBulletType.Normal;
             if (StaticFunctions.AreAlmostSameVector(-transform.right, Normal, mSameVectorAngle))
             {
-                Spawner.SpawnBullet(transform.position, StaticFunctions.Rotate2DVector3(Normal, -45.0f));
-                Spawner.SpawnBullet(transform.position, StaticFunctions.Rotate2DVector3(Normal, 45.0f));
+                Spawner.SpawnBullet(newBulletType, transform.position, StaticFunctions.Rotate2DVector3(Normal, -45.0f));
+                Spawner.SpawnBullet(newBulletType, transform.position, StaticFunctions.Rotate2DVector3(Normal, 45.0f));
             }
             else
             {
                 Vector3 Reflection = StaticFunctions.GetReflectionVector(transform.right, Normal);
-                Spawner.SpawnBullet(transform.position, Reflection);
-                Spawner.SpawnBullet(transform.position, -transform.right);
+                Spawner.SpawnBullet(newBulletType, transform.position, Reflection);
+                Spawner.SpawnBullet(newBulletType, transform.position, -transform.right);
             }
             UpdateBounces();
         }

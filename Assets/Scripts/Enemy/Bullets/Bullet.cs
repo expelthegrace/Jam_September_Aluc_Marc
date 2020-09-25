@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public BulletSpawner Spawner { get; set; }
+
     private const string ObstacleTag = "Obstacle";
     [SerializeField] private float mSpeed = 2.0f;
     [SerializeField] private int mMinBouncesToDestroy = 3;

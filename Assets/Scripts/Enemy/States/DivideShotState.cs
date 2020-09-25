@@ -10,6 +10,7 @@ public class DivideShotState : BasicState
         mDurationTime = 8f;
         nameState = "Dividing Shots";
         mStateID = 1;
+        mBulletType = BulletSpawner.eBulletType.Dividable;
         base.BasicStart();
     }
 

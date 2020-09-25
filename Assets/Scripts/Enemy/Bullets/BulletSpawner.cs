@@ -6,8 +6,14 @@ public class BulletSpawner: MonoBehaviour
 {
     //TODO pool of bullets
 
-    public GameObject mBulletPrefab;
-    public GameObject mDividableBulletPrefab;
+    public enum eBulletType
+    {
+        Normal,
+        Dividable
+    }
+
+    [SerializeField] private GameObject mBulletPrefab = null;
+    [SerializeField] private GameObject mDividableBulletPrefab = null;
 
     public GameObject Emitter { get; set; }
 
@@ -23,30 +29,26 @@ public class BulletSpawner: MonoBehaviour
 
     }
 
-    public void SpawnBullet(Vector3 aPosition, Vector3 aDirection)
+    public void SpawnBullet(eBulletType aBulletType, Vector3 aPosition, Vector3 aDirection)
     {
-        GameObject bullet = Instantiate(mBulletPrefab, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
+        SpawnBullet(aBulletType, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
+    }
+
+    public void SpawnBullet(eBulletType aBulletType, Vector3 aPosition, Quaternion aRotation)
+    {
+        GameObject bullet = Instantiate(GetBulletPrefabFromType(aBulletType), aPosition, aRotation);
+        bullet.GetComponent<Bullet>().Spawner = this;
         IgnoreCollision(bullet);
     }
 
-    public void SpawnBullet(Vector3 aPosition, Quaternion aRotation)
+    private GameObject GetBulletPrefabFromType(eBulletType aBulletType)
     {
-        GameObject bullet = Instantiate(mBulletPrefab, aPosition, aRotation);
-        IgnoreCollision(bullet);
-    }
-
-    public void SpawnDividableBullet(Vector3 aPosition, Vector3 aDirection)
-    {
-        GameObject bullet = Instantiate(mDividableBulletPrefab, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
-        bullet.GetComponent<DividableBullet>().Spawner = this;
-        IgnoreCollision(bullet);
-    }
-
-    public void SpawnDividableBullet(Vector3 aPosition, Quaternion aRotation)
-    {
-        GameObject bullet = Instantiate(mDividableBulletPrefab, aPosition, aRotation);
-        bullet.GetComponent<DividableBullet>().Spawner = this;
-        IgnoreCollision(bullet);
+        switch (aBulletType)
+        {
+            case eBulletType.Normal : return mBulletPrefab;
+            case eBulletType.Dividable : return mDividableBulletPrefab;
+            default: return null;
+        }
     }
 
     private void IgnoreCollision(GameObject aBulletObject)
