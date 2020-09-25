@@ -27,6 +27,7 @@ public class BasicState : EnemyState
     [SerializeField] protected int mBulletsPerShooting = 4;
 
     protected BulletSpawner mSpawner;
+    protected BulletSpawner.eBulletType mBulletType;
 
     protected float mTimeStateActive;
     protected float mTimeStateActivated;
@@ -47,6 +48,7 @@ public class BasicState : EnemyState
         mDurationTime = 15f;
         nameState = "Normal Mode";
         mStateID = 0;
+        mBulletType = BulletSpawner.eBulletType.Normal;
         BasicStart();      
     }
 
@@ -71,7 +73,7 @@ public class BasicState : EnemyState
         mTimeStateActive = Time.time - mTimeStateActivated;
 
         if (Input.GetKeyDown(KeyCode.Space))
-            mSpawner.SpawnDividableBullet(transform.position, transform.rotation);//TODO from nose
+            mSpawner.SpawnBullet(mBulletType, transform.position, transform.rotation);//TODO from nose
 
         ShootingManager();
 
@@ -143,7 +145,7 @@ public class BasicState : EnemyState
         {
             //Debug.DrawRay(transform.position, direction, Color.yellow,2f);
             Vector3 direction3 = new Vector3(direction.x, direction.y, 0f);
-            //mSpawner.SpawnBullet(transform.position + direction3 * mCanonDistance, direction3);
+            mSpawner.SpawnBullet(mBulletType, transform.position + direction3 * mCanonDistance, direction3);
         }          
     }
     
