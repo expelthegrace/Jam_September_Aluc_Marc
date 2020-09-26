@@ -17,9 +17,12 @@ public class ShieldManager : MonoBehaviour
 
     public static UnityEvent EventShieldCooldownStarted = new UnityEvent();
 
+    private List<GameObject> mParts;
+
     // Start is called before the first frame update
     void Start()
     {
+        mParts = new List<GameObject>();
         StartShieldCooldown();
     }
 
@@ -46,6 +49,15 @@ public class ShieldManager : MonoBehaviour
     {
         if (CanGenerateShield())
         {
+            foreach (GameObject part in mParts)
+            {
+                if (part != null)
+                {
+                    Destroy(part);
+                }
+            }
+            mParts.Clear();
+
             float shielRadius = Mathf.Max(gameObject.GetComponent<SpriteRenderer>().bounds.size.x, gameObject.GetComponent<SpriteRenderer>().bounds.size.y) + mRadiusFromGameObject;
             float angleIncrement = (2.0f * Mathf.PI)/ mPartsNum;
             for (int part = 0; part < mPartsNum; ++part)
@@ -53,6 +65,7 @@ public class ShieldManager : MonoBehaviour
                 Vector3 offset = shielRadius * new Vector3(Mathf.Cos(angleIncrement * part), Mathf.Sin(angleIncrement * part), 0.0f);
                 GameObject shieldPart = Instantiate(mPrefab, gameObject.transform.position + offset, Quaternion.identity);
                 shieldPart.transform.parent = gameObject.transform;
+                mParts.Add(shieldPart);
             }
 
             StartShieldCooldown();
