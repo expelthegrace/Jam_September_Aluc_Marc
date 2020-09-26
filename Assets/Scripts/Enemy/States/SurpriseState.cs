@@ -58,7 +58,7 @@ public class SurpriseState : BasicState
 
         mLastTimeShootedExtraEnemy = Time.time;
 
-        mAppearAudio.PlayScheduled(2.0f);
+        mAppearAudio.Play();
 
         base.BasicStart();
     }
