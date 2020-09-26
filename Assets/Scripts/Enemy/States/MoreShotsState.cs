@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DivideShotState : BasicState
+public class MoreShotsState : BasicState
 {
+
     public override void HandleStart()
     {
-        mDurationTime = 8f;
-        nameState = "Dividing Shots";
-        mStateID = 1;
-        mBulletType = BulletSpawner.eBulletType.Dividable;
+        mDurationTime = 12f;
+        nameState = "More Shots!!";
+        mStateID = 2;
+        mBulletType = BulletSpawner.eBulletType.Normal;
+
+
+        mTimeBetweenShooting = 2.5f;
+        mBulletsPerShooting = 5;
+        mNumberOfExtraCanons = 8;
+
         base.BasicStart();
     }
 
@@ -28,7 +35,6 @@ public class DivideShotState : BasicState
     public override void StateFixedUpdate()
     {
         base.Move();
-        base.ShootingManager();      
+        base.ShootingManager();
     }
-
 }
