@@ -29,16 +29,18 @@ public class BulletSpawner: MonoBehaviour
 
     }
 
-    public void SpawnBullet(eBulletType aBulletType, Vector3 aPosition, Vector3 aDirection)
+    public void SpawnBullet(eBulletType aBulletType, float aSpeedIncrement, Vector3 aPosition, Vector3 aDirection)
     {
-        SpawnBullet(aBulletType, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
+        SpawnBullet(aBulletType, aSpeedIncrement, aPosition, StaticFunctions.Get2DQuaternionFromDirection(aDirection));
     }
 
-    public void SpawnBullet(eBulletType aBulletType, Vector3 aPosition, Quaternion aRotation)
+    public void SpawnBullet(eBulletType aBulletType, float aSpeedIncrement, Vector3 aPosition, Quaternion aRotation)
     {
-        GameObject bullet = Instantiate(GetBulletPrefabFromType(aBulletType), aPosition, aRotation);
-        bullet.GetComponent<Bullet>().Spawner = this;
-        IgnoreCollision(bullet);
+        GameObject bulletObject = Instantiate(GetBulletPrefabFromType(aBulletType), aPosition, aRotation);
+        Bullet bulletComponent = bulletObject.GetComponent<Bullet>();
+        bulletComponent.Spawner = this;
+        bulletComponent.GetComponent<Bullet>().IncrementSpeed(aSpeedIncrement);
+        IgnoreCollision(bulletObject);
     }
 
     private GameObject GetBulletPrefabFromType(eBulletType aBulletType)

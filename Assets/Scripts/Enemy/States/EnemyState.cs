@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyState : MonoBehaviour
 {
+    protected EnemyManager mOwner;
     public float mDurationTime;
     protected int mStateID;
 
