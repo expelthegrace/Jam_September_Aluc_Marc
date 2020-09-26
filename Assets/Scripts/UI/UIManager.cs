@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class EnemyUIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     private float mTimeStartedPlaying = 0;
 
@@ -114,10 +114,12 @@ public class EnemyUIManager : MonoBehaviour
             mPlayingPanel.SetActive(false);
             mNotPlayingPanel.SetActive(true);
 
+            mPlayButton.GetComponentInChildren<Text>().color = Color.black;
+
             if (mGameManager.score != 0)
             {
                 mYourScoreText.gameObject.SetActive(true);
-                mYourScoreText.text = "You survived " + mGameManager.score.ToString() + " seconds";
+                mYourScoreText.text = "You survived  " + mGameManager.score.ToString() + " seconds";
             }
             else
                 mYourScoreText.gameObject.SetActive(false);

@@ -37,10 +37,8 @@ public class BasicState : EnemyState
 
     public override void HandleStart()
     {
-        Debug.Log("BasicState");
-
         mDurationTime = 5f;
-        nameState = "Normal Mode";
+        nameState = "'Normal' Mode";
         mStateID = 0;
         mBulletType = BulletSpawner.eBulletType.Normal;
         BasicStart();      
@@ -48,7 +46,6 @@ public class BasicState : EnemyState
 
     protected void BasicStart()
     {
-        Debug.Log("Basic start");
         mSpawner = (BulletSpawner)FindObjectOfType(typeof(BulletSpawner));
         mSpawner.Emitter = gameObject;
         mOnEnemyStateChanged.Invoke();
