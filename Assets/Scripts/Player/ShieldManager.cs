@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class ShieldManager : MonoBehaviour
 {
+    public AudioSource mEquipShieldAudio;
+
     [SerializeField] private GameObject mPrefab = null;
 
     [Header("Shield parts settings")]
@@ -24,6 +26,9 @@ public class ShieldManager : MonoBehaviour
     {
         mParts = new List<GameObject>();
         StartShieldCooldown();
+
+        mEquipShieldAudio = GameObject.Find("shieldEquipAudio").GetComponent<AudioSource>();
+        if (mEquipShieldAudio == null) Debug.Log("no quip shield audio found");
     }
 
     private void StartShieldCooldown()
@@ -58,6 +63,8 @@ public class ShieldManager : MonoBehaviour
             }
             mParts.Clear();
 
+            mEquipShieldAudio.Play();
+
             float shielRadius = Mathf.Max(gameObject.GetComponent<SpriteRenderer>().bounds.size.x, gameObject.GetComponent<SpriteRenderer>().bounds.size.y) + mRadiusFromGameObject;
             float angleIncrement = (2.0f * Mathf.PI)/ mPartsNum;
             for (int part = 0; part < mPartsNum; ++part)
@@ -74,6 +81,6 @@ public class ShieldManager : MonoBehaviour
 
     private bool CanGenerateShield()
     {
-        return Input.GetKeyDown(KeyCode.Y) && mCooldownTimeout;
+        return Input.GetKeyDown(KeyCode.E) && mCooldownTimeout;
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine.Assertions;
 
 public class BasicState : EnemyState
 {
+    public AudioSource mShootAudio;
+
     private Rigidbody2D mRigidBody;
     private Transform mPlayer;
 
@@ -20,7 +22,7 @@ public class BasicState : EnemyState
     [Header("Shooting settings")]
     [SerializeField] private float mAngleBetweenCanons = 20f;
     [SerializeField] protected int mNumberOfExtraCanons = 2;
-    [SerializeField] private float mCanonDistance = 0.6f;        
+    [SerializeField] private float mCanonDistance = 0.2f;        
 
     private float mLastTimeShooted;
     [SerializeField] protected float mTimeBetweenShooting = 2f;
@@ -47,6 +49,9 @@ public class BasicState : EnemyState
 
     protected void BasicStart()
     {
+        //Audio
+        mShootAudio = GameObject.Find("ShootAudio").GetComponent<AudioSource>();
+
 
         mPlayer = GameObject.Find("Player").transform;
         if (mPlayer == null) Debug.Log("no player found");
@@ -140,6 +145,8 @@ public class BasicState : EnemyState
             //Debug.DrawRay(transform.position, direction, Color.yellow,2f);
             Vector3 direction3 = new Vector3(direction.x, direction.y, 0f);
             mSpawner.SpawnBullet(mBulletType, mOwner.GetSpeedIncrement(), transform.position + direction3 * mCanonDistance, direction3);
+
+            mShootAudio.Play();
         }          
     }
     
