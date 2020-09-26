@@ -14,7 +14,8 @@ public class GameManagerSC : MonoBehaviour
     public float score;
 
 
-    public static UnityEvent mOnGameStateChanged = new UnityEvent();
+    public static UnityEvent EventGameStarted = new UnityEvent();
+    public static UnityEvent EventGameEnded = new UnityEvent();
 
     private GameManagerSC mGmReference;
     public  GameManagerSC GmRegerence { get { return mGmReference; } }
@@ -28,12 +29,14 @@ public class GameManagerSC : MonoBehaviour
     private bool mEarlyInvoked = false;
     private void EarlyEventInvoke()
     {
-        mOnGameStateChanged.Invoke();
+        EventGameEnded.Invoke();
         mEarlyInvoked = true;
     }
 
     void Awake()
     {
+        Random.InitState((int)Time.time);
+
         if (GmRegerence != null)
             GameObject.Destroy(GmRegerence);
         else
@@ -56,7 +59,20 @@ public class GameManagerSC : MonoBehaviour
     {
         if (aGameState == mCurrentGameState) return;
         mCurrentGameState = aGameState;
-        mOnGameStateChanged.Invoke();
+        
+        switch (mCurrentGameState)
+        {
+            case GameState.Playing:
+            {
+                EventGameStarted.Invoke();
+                break;
+            }
+            case GameState.NotPlaying:
+            {
+                EventGameEnded.Invoke();
+                break;
+            }                
+        }
     }
 
     //Only for test

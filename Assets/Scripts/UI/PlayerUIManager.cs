@@ -16,10 +16,10 @@ public class PlayerUIManager : MonoBehaviour
     {
         mPlayerShieldManager = mPlayer.GetComponent<ShieldManager>();
         ShieldManager.EventShieldCooldownStarted.AddListener(StartShieldCooldown);
-        GameManagerSC.mOnGameStateChanged.AddListener(StartGame);
+        GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
     }
 
-    private void StartGame()
+    private void OnEventStartGame()
     {
         coolDownImageBar.fillAmount = 1.0f;
     }

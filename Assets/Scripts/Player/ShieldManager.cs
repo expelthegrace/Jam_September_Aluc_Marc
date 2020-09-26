@@ -29,10 +29,10 @@ public class ShieldManager : MonoBehaviour
         mEquipShieldAudio = GameObject.Find("shieldEquipAudio").GetComponent<AudioSource>();
         if (mEquipShieldAudio == null) Debug.Log("no quip shield audio found");
 
-        GameManagerSC.mOnGameStateChanged.AddListener(StartGame);
+        GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
     }
 
-    private void StartGame()
+    private void OnEventStartGame()
     {
         mCooldownTimeout = true;
         ResetShield();

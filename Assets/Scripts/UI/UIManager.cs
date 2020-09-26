@@ -36,23 +36,24 @@ public class UIManager : MonoBehaviour
         mEnemyStateManager = mEnemy.GetComponent<StateManager>();
 
         EnemyState.mOnEnemyStateChanged.AddListener(StartCountdownnImage);
-        GameManagerSC.mOnGameStateChanged.AddListener(GameStateChanged);
+        GameManagerSC.EventGameStarted.AddListener(OnEventGameStarted);
+        GameManagerSC.EventGameEnded.AddListener(OnEventGameEnded);
 
         var tempColor = blurPanel.color;
         tempColor.a = 0;
         blurPanel.color = tempColor;
     }
 
-    public void GameStateChanged()
+    public void OnEventGameStarted()
     {
-        switch(mGameManager.CurrentGameState)
-        {
-            case GameManagerSC.GameState.Playing:
-                mGameManager.score = 0;
-                mTimeStartedPlaying = Time.time;
-                break;
-        }
+        mGameManager.score = 0;
+        mTimeStartedPlaying = Time.time;
 
+        SwitchPanel();
+    }
+
+    private void OnEventGameEnded()
+    {
         SwitchPanel();
     }
 

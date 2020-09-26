@@ -14,10 +14,10 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManagerSC.mOnGameStateChanged.AddListener(StartGame);
+        GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
     }
 
-    void StartGame()
+    void OnEventStartGame()
     {
         mGameTime = Time.time;
     }

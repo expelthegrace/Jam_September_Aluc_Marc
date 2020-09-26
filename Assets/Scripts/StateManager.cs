@@ -26,7 +26,8 @@ public class StateManager : MonoBehaviour
         mBasicState = gameObject.AddComponent<BasicState>();
         mDivideShotState = gameObject.AddComponent<DivideShotState>();
         mMoreShotsState = gameObject.AddComponent<MoreShotsState>();
-        GameManagerSC.mOnGameStateChanged.AddListener(GameMightStarted);
+        GameManagerSC.EventGameStarted.AddListener(OnEventGameStarted);
+        GameManagerSC.EventGameEnded.AddListener(OnEventGameEnded);
 
         GoToState(mEmptyState);
     }
@@ -60,15 +61,16 @@ public class StateManager : MonoBehaviour
         mCurrentState.HandleStart();
 
     }
-
-    private void GameMightStarted()
+    
+    private void OnEventGameStarted()
     {
-        if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState == GameManagerSC.GameState.Playing)
-            GoToState(mBasicState);
-        else
-            GoToState(mEmptyState);
+        GoToState(mBasicState);
     }
-
+    
+    private void OnEventGameEnded()
+    {
+        GoToState(mEmptyState);
+    }
  
     /*
      * Actualment no puc tenir un currentState = new State() si aquest State hereda de monobehaviour. S'hauria de fer amb gameObject.AddComponent(State);
