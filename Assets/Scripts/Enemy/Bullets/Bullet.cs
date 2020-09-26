@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
 
     private const string ObstacleTag = "Obstacle";
     [SerializeField] private float mSpeed = 2.0f;
+    protected float mSpeedIncrement = 0.0f;
     [SerializeField] private int mMinBouncesToDestroy = 3;
     [SerializeField] private int mMaxBouncesToDestroy = 10;
     protected int mBouncesToDestroy = 0;
@@ -17,6 +18,12 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         mBouncesToDestroy = Random.Range(mMinBouncesToDestroy, mMaxBouncesToDestroy);
+    }
+
+    public void IncrementSpeed(float aIncrement)
+    {
+        mSpeedIncrement = aIncrement;
+        mSpeed += aIncrement;
     }
 
     // Update is called once per frame

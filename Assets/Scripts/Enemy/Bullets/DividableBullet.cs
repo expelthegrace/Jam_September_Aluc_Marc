@@ -25,14 +25,14 @@ public class DividableBullet : Bullet
             BulletSpawner.eBulletType newBulletType = BulletSpawner.eBulletType.Normal;
             if (StaticFunctions.AreAlmostSameVector(-transform.right, Normal, mSameVectorAngle))
             {
-                Spawner.SpawnBullet(newBulletType, transform.position, StaticFunctions.Rotate2DVector3(Normal, -45.0f));
-                Spawner.SpawnBullet(newBulletType, transform.position, StaticFunctions.Rotate2DVector3(Normal, 45.0f));
+                Spawner.SpawnBullet(newBulletType, mSpeedIncrement, transform.position, StaticFunctions.Rotate2DVector3(Normal, -45.0f));
+                Spawner.SpawnBullet(newBulletType, mSpeedIncrement, transform.position, StaticFunctions.Rotate2DVector3(Normal, 45.0f));
             }
             else
             {
                 Vector3 Reflection = StaticFunctions.GetReflectionVector(transform.right, Normal);
-                Spawner.SpawnBullet(newBulletType, transform.position, Reflection);
-                Spawner.SpawnBullet(newBulletType, transform.position, -transform.right);
+                Spawner.SpawnBullet(newBulletType, mSpeedIncrement, transform.position, Reflection);
+                Spawner.SpawnBullet(newBulletType, mSpeedIncrement, transform.position, -transform.right);
             }
             UpdateBounces();
         }
