@@ -1,3 +1,0 @@
-charlie
-skin renderer
-package manager
