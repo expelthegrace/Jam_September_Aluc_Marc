@@ -18,7 +18,7 @@ public class BasicState : EnemyState
     //Shooting
     [Header("Shooting settings")]
     [SerializeField] private float mAngleBetweenCanons = 20f;
-    [SerializeField] private int mNumberOfExtraCanons = 2;
+    [SerializeField] protected int mNumberOfExtraCanons = 2;
     [SerializeField] private float mCanonDistance = 0.6f;
 
     private float mLastTimeShooted;
@@ -111,6 +111,7 @@ public class BasicState : EnemyState
         {
             mLastTimeShooted = Time.time;
             StartCoroutine(ShootBurst());
+            CameraAnimation.Shake(0.01f, mBulletsPerShooting * mTimeBetweenBullet);
         }
     }
 
@@ -168,6 +169,8 @@ public class BasicState : EnemyState
                 return gameObject.GetComponent<BasicState>();
             case 1:
                 return gameObject.GetComponent<DivideShotState>();
+            case 2:
+                return gameObject.GetComponent<MoreShotsState>();                
         }
 
         return null;

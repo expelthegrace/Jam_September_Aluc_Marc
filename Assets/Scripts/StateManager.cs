@@ -13,10 +13,11 @@ public class StateManager : MonoBehaviour
     }
 
     //Declare the states here
-    static public int mNUmberOfEnemyStates = 2;
+    static public int mNUmberOfEnemyStates = 3;
     private EnemyState mEmptyState = null;
     private BasicState mBasicState = null;
     private DivideShotState mDivideShotState = null;
+    private MoreShotsState mMoreShotsState = null;
 
 
     void Start()
@@ -24,6 +25,7 @@ public class StateManager : MonoBehaviour
         mEmptyState = gameObject.AddComponent<EnemyState>();
         mBasicState = gameObject.AddComponent<BasicState>();
         mDivideShotState = gameObject.AddComponent<DivideShotState>();
+        mMoreShotsState = gameObject.AddComponent<MoreShotsState>();
         GameManagerSC.mOnGameStateChanged.AddListener(GameMightStarted);
 
         GoToState(mEmptyState);
