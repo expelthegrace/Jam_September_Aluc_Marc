@@ -6,6 +6,8 @@ public class BulletSpawner: MonoBehaviour
 {
     //TODO pool of bullets
 
+    public Transform mBulletContainer;
+
     public enum eBulletType
     {
         Normal,
@@ -36,7 +38,7 @@ public class BulletSpawner: MonoBehaviour
 
     public void SpawnBullet(eBulletType aBulletType, float aSpeedIncrement, Vector3 aPosition, Quaternion aRotation)
     {
-        GameObject bulletObject = Instantiate(GetBulletPrefabFromType(aBulletType), aPosition, aRotation);
+        GameObject bulletObject = Instantiate(GetBulletPrefabFromType(aBulletType), aPosition, aRotation, mBulletContainer);
         Bullet bulletComponent = bulletObject.GetComponent<Bullet>();
         bulletComponent.Spawner = this;
         bulletComponent.GetComponent<Bullet>().IncrementSpeed(aSpeedIncrement);
