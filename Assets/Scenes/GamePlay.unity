@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c907459f49a3f48863c8f94de1c559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSpeedIncrementSeconds: 5
+  mSpeedIncrementSeconds: 10
   mSpeedIncrement: 1
 --- !u!1 &101607102
 GameObject:
@@ -775,7 +775,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &145836997
 Transform:
   m_ObjectHideFlags: 0
@@ -3999,7 +3999,7 @@ PrefabInstance:
     - target: {fileID: 3674263805233545349, guid: 1feea5700539dfd4595889d9da7a5515,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.07
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 3674263805233545349, guid: 1feea5700539dfd4595889d9da7a5515,
         type: 3}

@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class BasicState : EnemyState
 {
     private Rigidbody2D mRigidBody;
+    private Transform mPlayer;
 
     //Movement
     private float mLastTurn;
@@ -36,7 +37,7 @@ public class BasicState : EnemyState
     //So this function is called in the first Update, when all the starts are been called
 
     public override void HandleStart()
-    {
+    {      
         mDurationTime = 5f;
         nameState = "'Normal' Mode";
         mStateID = 0;
@@ -46,6 +47,10 @@ public class BasicState : EnemyState
 
     protected void BasicStart()
     {
+
+        mPlayer = GameObject.Find("Player").transform;
+        if (mPlayer == null) Debug.Log("no player found");
+
         mOwner = gameObject.GetComponent<EnemyManager>();
         mSpawner = (BulletSpawner)FindObjectOfType(typeof(BulletSpawner));
         mSpawner.Emitter = gameObject;
@@ -62,9 +67,6 @@ public class BasicState : EnemyState
     public override EnemyState StateUpdate()
     {
         mTimeStateActive = Time.time - mTimeStateActivated;
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            mSpawner.SpawnBullet(mBulletType, mOwner.GetSpeedIncrement(), transform.position, transform.rotation);//TODO from nose
 
         ShootingManager();
 
@@ -120,7 +122,7 @@ public class BasicState : EnemyState
     {     
         List<Vector2> canonDirections = new List<Vector2>();
 
-        Vector2 centralVector = transform.right;
+        Vector2 centralVector = new Vector2(mPlayer.position.x - transform.position.x, mPlayer.position.y - transform.position.y).normalized;
         canonDirections.Add(centralVector);
 
         Vector2 canonTemp;
