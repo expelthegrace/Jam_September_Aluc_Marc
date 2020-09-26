@@ -14,21 +14,25 @@ public class StateManager : MonoBehaviour
 
     //Declare the states here
     static public int mNUmberOfEnemyStates = 2;
+    private EnemyState mEmptyState = null;
     private BasicState mBasicState = null;
     private DivideShotState mDivideShotState = null;
 
+
     void Start()
     {
+        mEmptyState = gameObject.AddComponent<EnemyState>();
         mBasicState = gameObject.AddComponent<BasicState>();
         mDivideShotState = gameObject.AddComponent<DivideShotState>();
+        GameManagerSC.mOnGameStateChanged.AddListener(GameMightStarted);
 
-        GoToState(mBasicState);
+        GoToState(mEmptyState);
     }
 
 
     void Update()
     {
-        if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState != GameManagerSC.GameState.Playing) return;
+        //if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState != GameManagerSC.GameState.Playing) return;
         EnemyState stateReturn = null;
 
         if (mCurrentState != null)
@@ -41,7 +45,7 @@ public class StateManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState != GameManagerSC.GameState.Playing) return;
+        //if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState != GameManagerSC.GameState.Playing) return;
         if (mCurrentState != null)
             mCurrentState.StateFixedUpdate();
     }
@@ -53,6 +57,14 @@ public class StateManager : MonoBehaviour
         mCurrentState = aNewEnemyState;
         mCurrentState.HandleStart();
 
+    }
+
+    private void GameMightStarted()
+    {
+        if (mGameManager.GetComponent<GameManagerSC>().CurrentGameState == GameManagerSC.GameState.Playing)
+            GoToState(mBasicState);
+        else
+            GoToState(mEmptyState);
     }
 
  

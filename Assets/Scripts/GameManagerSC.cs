@@ -13,6 +13,7 @@ public class GameManagerSC : MonoBehaviour
 
     public float score;
 
+
     public static UnityEvent mOnGameStateChanged = new UnityEvent();
 
     private GameManagerSC mGmReference;
@@ -40,9 +41,14 @@ public class GameManagerSC : MonoBehaviour
 
     }
 
+    public void PlayButton()
+    {
+        GoToGameState(GameState.Playing);
+    }
+
     public void Start()
     {       
-        GoToGameState(GameState.Playing);
+        GoToGameState(GameState.NotPlaying);
         score = 0;
     }
 

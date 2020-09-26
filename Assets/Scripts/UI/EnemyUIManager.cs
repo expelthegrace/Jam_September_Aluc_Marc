@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class EnemyUIManager : MonoBehaviour
@@ -25,6 +26,9 @@ public class EnemyUIManager : MonoBehaviour
     public GameObject mEnemy;
     private StateManager mEnemyStateManager;
     private EnemyState mCurrentState;
+
+    public Text mYourScoreText;
+    public Button mPlayButton;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +68,7 @@ public class EnemyUIManager : MonoBehaviour
 
     private void StartCountdownnImage()
     {
+        Debug.Log("coundown bar");
         StopCoroutine(UpdateCountdownImage());
         StartCoroutine(UpdateCountdownImage());
        
@@ -99,24 +104,29 @@ public class EnemyUIManager : MonoBehaviour
     {
         if (mGameManager.CurrentGameState == GameManagerSC.GameState.Playing)
         {
-            Debug.Log("Playing");
             StartCoroutine(deactivateBlur());
             mPlayingPanel.SetActive(true);
             mNotPlayingPanel.SetActive(false);
         }
         else
         {
-            Debug.Log("Not playing");
             StartCoroutine(activateBlur());
             mPlayingPanel.SetActive(false);
             mNotPlayingPanel.SetActive(true);
-           
+
+            if (mGameManager.score != 0)
+            {
+                mYourScoreText.gameObject.SetActive(true);
+                mYourScoreText.text = "You survived " + mGameManager.score.ToString() + " seconds";
+            }
+            else
+                mYourScoreText.gameObject.SetActive(false);
+
         }
-    }
+}
 
     private IEnumerator activateBlur()
     {
-        Debug.Log("Activant blur");
         float startTime = Time.time;
 
         while (Time.time - startTime <= mBlurActivateTime)
@@ -142,5 +152,6 @@ public class EnemyUIManager : MonoBehaviour
             yield return null;
         }     
     }
+
 }
 
