@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D mRigidBody;
     [SerializeField] private float mSpeed = 2.0f;
     private const string BulletTag = "Bullet";
+    private const string EnemyTag = "Enemy";
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D aCollision)
     {
-        if (aCollision.gameObject.tag == BulletTag)
+        if (aCollision.gameObject.tag == BulletTag || aCollision.gameObject.tag == EnemyTag)
         {
             CameraAnimation.Shake();
         }

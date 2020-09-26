@@ -209,7 +209,9 @@ public class BasicState : EnemyState
             case 1:
                 return gameObject.GetComponent<DivideShotState>();
             case 2:
-                return gameObject.GetComponent<MoreShotsState>();                
+                return gameObject.GetComponent<MoreShotsState>();
+            case 3:
+                return gameObject.GetComponent<SurpriseState>();
         }
 
         return null;
