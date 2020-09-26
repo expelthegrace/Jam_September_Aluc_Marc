@@ -70,7 +70,6 @@ public class UIManager : MonoBehaviour
 
     private void StartCountdownnImage()
     {
-        Debug.Log("coundown bar");
         StopCoroutine(UpdateCountdownImage());
         StartCoroutine(UpdateCountdownImage());
     }

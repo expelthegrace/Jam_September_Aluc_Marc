@@ -17,6 +17,7 @@ public class BasicState : EnemyState
     [SerializeField] private float mTimeToTurn = 1;
     [SerializeField] protected float mSpeed = 0.55f;
     [SerializeField] protected float mTurnAngle = 140;
+    protected float mDistanceTriggerToTurn = 1.5f;
 
     //Shooting
     [Header("Shooting settings")]
@@ -51,7 +52,6 @@ public class BasicState : EnemyState
     {
         //Audio
         mShootAudio = GameObject.Find("ShootAudio").GetComponent<AudioSource>();
-
 
         mPlayer = GameObject.Find("Player").transform;
         if (mPlayer == null) Debug.Log("no player found");
@@ -89,13 +89,42 @@ public class BasicState : EnemyState
     protected void Move()
     {
         if (mRigidBody == null) return;
-        mRigidBody.velocity =  new Vector2( gameObject.transform.right.x, gameObject.transform.right.y) * mSpeed;
+        mRigidBody.velocity = new Vector2(gameObject.transform.right.x, gameObject.transform.right.y) * mSpeed;
 
+        Debug.DrawLine(transform.position, transform.position + transform.right * mDistanceTriggerToTurn);
+
+        float newAngle = 0;
         if (Time.time - mLastTurn > mTimeBetweenTurns)
         {
+            int cont = 0;
+            bool obstacleFound;
+            do
+            {
+                obstacleFound = false;
+
+                newAngle = Random.Range(-mTurnAngle, mTurnAngle);
+
+                Vector2 newDirectionRotated = StaticFunctions.RotateVector2(new Vector2(transform.right.x, transform.right.y), newAngle);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, newDirectionRotated, mDistanceTriggerToTurn);         
+
+                Debug.DrawRay(transform.position, newDirectionRotated, Color.yellow, 2f);
+
+                foreach (RaycastHit2D hit in hits)
+                {
+                    if (hit.collider != null && hit.collider.gameObject.tag == "Obstacle")
+                    {
+                        obstacleFound = true;
+                        break;
+                    }
+                }
+
+                ++cont;
+            } while (obstacleFound && cont < 10);
+
             mLastTurn = Time.time;
-            StartCoroutine(Turn(Random.Range(-mTurnAngle, mTurnAngle), mTimeToTurn));           
+            StartCoroutine(Turn(newAngle, mTimeToTurn));
         }
+       
     }
 
 
