@@ -14,15 +14,15 @@ public class ShieldPart : MonoBehaviour
     {
         mCristalAudio = GameObject.Find("cristalAudio").GetComponent<AudioSource>();
         if (mCristalAudio == null) Debug.Log("no cristal audio found");
-    }
 
-    // Update is called once per frame
-    void Update()
+        GameManagerSC.EventGameEnded.AddListener(OnEventGameEnded);
+    }
+    
+    private void OnEventGameEnded()
     {
-        
+        gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
-    //void OnCollisionEnter2D(Collision2D aCollision)
     void OnTriggerEnter2D(Collider2D aCollision)
     {
         if (aCollision.gameObject.CompareTag(BulletTag))

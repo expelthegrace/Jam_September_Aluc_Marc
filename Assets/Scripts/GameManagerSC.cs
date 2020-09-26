@@ -20,7 +20,7 @@ public class GameManagerSC : MonoBehaviour
     private GameManagerSC mGmReference;
     public  GameManagerSC GmRegerence { get { return mGmReference; } }
 
-    private GameState mCurrentGameState;
+    private static GameState mCurrentGameState;
     public GameState CurrentGameState
     {
         get { return mCurrentGameState; }     
@@ -55,7 +55,7 @@ public class GameManagerSC : MonoBehaviour
         score = 0;
     }
 
-    public void GoToGameState(GameState aGameState)
+    static public void GoToGameState(GameState aGameState)
     {
         if (aGameState == mCurrentGameState) return;
         mCurrentGameState = aGameState;

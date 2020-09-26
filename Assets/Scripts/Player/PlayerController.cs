@@ -9,13 +9,26 @@ public class PlayerController : MonoBehaviour
     private const string BulletTag = "Bullet";
     private const string EnemyTag = "Enemy";
 
+    [SerializeField] private bool mCanDie = false;
+
     // Start is called before the first frame update
     void Start()
     {
         mRigidBody = GetComponent<Rigidbody2D>();
+        GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
+        GameManagerSC.EventGameEnded.AddListener(OnEventEndGame);
     }
 
-    // Update is called once per frame
+    private void OnEventStartGame()
+    {
+        mRigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    private void OnEventEndGame()
+    {
+        mRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+    
     void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -30,6 +43,10 @@ public class PlayerController : MonoBehaviour
         if (aCollision.gameObject.tag == BulletTag || aCollision.gameObject.tag == EnemyTag)
         {
             CameraAnimation.Shake();
+            if (mCanDie)
+            {
+                GameManagerSC.GoToGameState(GameManagerSC.GameState.NotPlaying);
+            }
         }
     }
 }
