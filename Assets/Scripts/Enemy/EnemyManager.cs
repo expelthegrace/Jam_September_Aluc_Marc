@@ -24,14 +24,23 @@ public class EnemyManager : MonoBehaviour
 
     public float GetSpeedIncrement()
     {
-        int numIncrements = GetNumIncrements();
+        int numIncrements = GetNumSpeedIncrements();
         return numIncrements * mSpeedIncrement;
     }
 
-    public int GetNumIncrements()
+    public int GetNumSpeedIncrements()
     {
         return Mathf.Min(Mathf.FloorToInt((Time.time - mGameTime) / mSpeedIncrementSeconds), mMaxSpeedIncrements);
     }
+
+    /*
+     * Returns a float betwwen 0 and 1 indicating the bullets speed increment factor.
+     */
+    public float GetSpeedIncrementScale()
+    {
+        return (float)GetNumSpeedIncrements() / (float)mMaxSpeedIncrements;
+    }
+    
 
     // Update is called once per frame
     void Update()

@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class OSTController : MonoBehaviour
 {
+    [SerializeField] private float mInitialVolume = 0.3f;
     private AudioSource mMenuAudio;
     private AudioSource[] mPlayGameAudios;
     private int mPlayGamePlayingAudioIndex;
+    [SerializeField] private GameObject mEnemy;
+    private EnemyManager mEnemyManager;
+    [SerializeField] private float mPitchIncrementStep = 0.5f;
+    [SerializeField] private float mVolumeIncrementStep = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -15,9 +20,10 @@ public class OSTController : MonoBehaviour
         mPlayGamePlayingAudioIndex = -1;
         GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
         GameManagerSC.EventGameEnded.AddListener(OnEventEndGame);
+        mEnemyManager = mEnemy.GetComponent<EnemyManager>();
     }
 
-    private void LoadAudios()
+private void LoadAudios()
     {
         string[] playAudios = { "PlayAudio1", "PlayAudio2" };
         mPlayGameAudios = new AudioSource[playAudios.Length];
@@ -26,6 +32,7 @@ public class OSTController : MonoBehaviour
         {
             string audioObjectName = playAudios[i];
             AudioSource audio = GameObject.Find(audioObjectName).GetComponent<AudioSource>();
+            audio.volume = mInitialVolume;
             if (audioObjectName == null)
             {
                 Debug.LogWarning("no audio for playing game" + audioObjectName + " found");
@@ -63,6 +70,11 @@ public class OSTController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (mPlayGamePlayingAudioIndex != -1)
+        {
+            float incrementScale = mEnemyManager.GetSpeedIncrementScale() * 10;
+            mPlayGameAudios[mPlayGamePlayingAudioIndex].pitch = 1 + incrementScale * mPitchIncrementStep;
+            mPlayGameAudios[mPlayGamePlayingAudioIndex].volume = mInitialVolume + incrementScale * mVolumeIncrementStep;
+        }
     }
 }

@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour
     {
         var enemyManager = mEnemy.GetComponent<EnemyManager>();
 
-        float IncrementScale = (float)enemyManager.GetNumIncrements() / (float)enemyManager.mMaxSpeedIncrements;
+        float IncrementScale = enemyManager.GetSpeedIncrementScale();
         Color result = Color.white;
         result.g = 1.0f - IncrementScale;
         result.b = 1.0f - IncrementScale;
