@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour
             if (mGameManager.score != 0)
             {
                 mYourScoreText.gameObject.SetActive(true);
-                mYourScoreText.text = "You survived  " + mGameManager.score.ToString() + " seconds";
+                mYourScoreText.text = "You survived  " + mGameManager.score.ToString() + "  seconds";
             }
             else
                 mYourScoreText.gameObject.SetActive(false);

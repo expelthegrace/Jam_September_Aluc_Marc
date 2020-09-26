@@ -20,6 +20,10 @@ public class CameraAnimation : MonoBehaviour
     {
         Camera = GameObject.Find("Main Camera");
         mCameraManager = GameObject.Find("GameManager").GetComponent<GameManagerSC>();
+
+        if (Camera == null || mCameraManager == null)
+            Debug.Log("CameraAnimationSC has a nullpointer reference");
+
         originalPos = Camera.transform.localPosition;
     }
 
