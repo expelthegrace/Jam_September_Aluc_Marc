@@ -40,12 +40,18 @@ public class BasicState : EnemyState
     //So this function is called in the first Update, when all the starts are been called
 
     public override void HandleStart()
-    {      
+    {
+        gameObject.transform.position = new Vector3(0, 0, 0);
         mDurationTime = 5f;
         nameState = "'Normal' Mode";
         mStateID = 0;
         mBulletType = BulletSpawner.eBulletType.Normal;
         BasicStart();      
+    }
+
+    public override void HandleExit()
+    {
+        mRigidBody.Sleep();
     }
 
     protected void BasicStart()
@@ -91,8 +97,6 @@ public class BasicState : EnemyState
         if (mRigidBody == null) return;
         mRigidBody.velocity = new Vector2(gameObject.transform.right.x, gameObject.transform.right.y) * mSpeed;
 
-        Debug.DrawLine(transform.position, transform.position + transform.right * mDistanceTriggerToTurn);
-
         float newAngle = 0;
         if (Time.time - mLastTurn > mTimeBetweenTurns)
         {
@@ -107,7 +111,7 @@ public class BasicState : EnemyState
                 Vector2 newDirectionRotated = StaticFunctions.RotateVector2(new Vector2(transform.right.x, transform.right.y), newAngle);
                 RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, newDirectionRotated, mDistanceTriggerToTurn);         
 
-                Debug.DrawRay(transform.position, newDirectionRotated, Color.yellow, 2f);
+                //Debug.DrawRay(transform.position, newDirectionRotated, Color.yellow, 2f);
 
                 foreach (RaycastHit2D hit in hits)
                 {

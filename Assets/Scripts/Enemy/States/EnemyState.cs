@@ -14,7 +14,7 @@ public class EnemyState : MonoBehaviour
     {
         mStateID = -1;
         mDurationTime = -1;
-        gameObject.transform.position = new Vector3(0, 0, 0);
+        
     }
     public virtual void HandleExit() { }
 
