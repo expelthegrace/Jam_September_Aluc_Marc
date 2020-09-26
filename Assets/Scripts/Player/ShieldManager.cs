@@ -15,7 +15,7 @@ public class ShieldManager : MonoBehaviour
 
     [Header("Cooldown settings")]
     [SerializeField] public float mCooldownSeconds = 4.0f;
-    private bool mCooldownTimeout = false;
+    private bool mCooldownTimeout;
 
     public static UnityEvent EventShieldCooldownStarted = new UnityEvent();
 
@@ -25,10 +25,17 @@ public class ShieldManager : MonoBehaviour
     void Start()
     {
         mParts = new List<GameObject>();
-        StartShieldCooldown();
 
         mEquipShieldAudio = GameObject.Find("shieldEquipAudio").GetComponent<AudioSource>();
         if (mEquipShieldAudio == null) Debug.Log("no quip shield audio found");
+
+        GameManagerSC.mOnGameStateChanged.AddListener(StartGame);
+    }
+
+    private void StartGame()
+    {
+        mCooldownTimeout = true;
+        ResetShield();
     }
 
     private void StartShieldCooldown()
@@ -54,14 +61,7 @@ public class ShieldManager : MonoBehaviour
     {
         if (CanGenerateShield())
         {
-            foreach (GameObject part in mParts)
-            {
-                if (part != null)
-                {
-                    Destroy(part);
-                }
-            }
-            mParts.Clear();
+            ResetShield();
 
             mEquipShieldAudio.Play();
 
@@ -77,6 +77,18 @@ public class ShieldManager : MonoBehaviour
 
             StartShieldCooldown();
         }
+    }
+
+    private void ResetShield()
+    {
+        foreach (GameObject part in mParts)
+        {
+            if (part != null)
+            {
+                Destroy(part);
+            }
+        }
+        mParts.Clear();
     }
 
     private bool CanGenerateShield()

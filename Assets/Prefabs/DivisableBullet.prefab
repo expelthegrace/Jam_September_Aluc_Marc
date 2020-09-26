@@ -28,6 +28,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: DivisableBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 5369653520225294165, guid: 8f6d2c629342027498d1531a315de583,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9464974
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369653520225294165, guid: 8f6d2c629342027498d1531a315de583,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.9811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369653520225294165, guid: 8f6d2c629342027498d1531a315de583,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6954055049237899358, guid: 8f6d2c629342027498d1531a315de583,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -72,7 +72,6 @@ public class UIManager : MonoBehaviour
         Debug.Log("coundown bar");
         StopCoroutine(UpdateCountdownImage());
         StartCoroutine(UpdateCountdownImage());
-       
     }
 
     private IEnumerator UpdateCountdownImage()

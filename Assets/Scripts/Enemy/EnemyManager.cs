@@ -14,7 +14,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartGame(); //TODO call this when new game is started
+        GameManagerSC.mOnGameStateChanged.AddListener(StartGame);
     }
 
     void StartGame()
