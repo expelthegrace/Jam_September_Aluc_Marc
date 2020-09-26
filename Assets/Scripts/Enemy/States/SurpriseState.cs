@@ -14,10 +14,13 @@ public class SurpriseState : BasicState
     [SerializeField] private int mBulletsPerShootingExtraEnemy = 2;
     [SerializeField] private int mNumberOfCanonsExtraEnemy = 20;
 
+    private AudioSource mAppearAudio;
+
     public void Start()
     {
         mExtraEnemy = GameObject.Find("SurpriseEnemy");
         mPlayer = GameObject.Find("Player");
+        
         GameObject SpawnPoints = GameObject.Find("SpawnPoints");
         Transform[] spawnPointsTransforms = SpawnPoints.GetComponentsInChildren<Transform>();
         mSpawnPoints = new Vector3[spawnPointsTransforms.Length];
@@ -25,6 +28,10 @@ public class SurpriseState : BasicState
         {
             mSpawnPoints[i] = spawnPointsTransforms[i].position;
         }
+
+        mAppearAudio = GameObject.Find("AppearAudio").GetComponent<AudioSource>();
+        if (mAppearAudio == null) Debug.Log("No audio for surprise appear found");
+
         mExtraEnemy.SetActive(false);
     }
     public override void HandleStart()
@@ -50,6 +57,8 @@ public class SurpriseState : BasicState
         mExtraEnemy.transform.position = spawnPosition;
 
         mLastTimeShootedExtraEnemy = Time.time;
+
+        mAppearAudio.PlayScheduled(2.0f);
 
         base.BasicStart();
     }
