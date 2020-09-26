@@ -6,7 +6,7 @@ public class BulletSpawner: MonoBehaviour
 {
     //TODO pool of bullets
 
-    public Transform mBulletContainer;
+    public GameObject mBulletContainer;
 
     public enum eBulletType
     {
@@ -19,16 +19,21 @@ public class BulletSpawner: MonoBehaviour
 
     public GameObject Emitter { get; set; }
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEventStartGame()
     {
-
+        Transform[] bullets = mBulletContainer.GetComponentsInChildren<Transform>();
+        foreach(Transform bullet in bullets)
+        {
+            if (bullet.gameObject != mBulletContainer)
+            {
+                Destroy(bullet.gameObject);
+            }            
+        }
     }
 
     public void SpawnBullet(eBulletType aBulletType, float aSpeedIncrement, Vector3 aPosition, Vector3 aDirection)
@@ -38,7 +43,7 @@ public class BulletSpawner: MonoBehaviour
 
     public void SpawnBullet(eBulletType aBulletType, float aSpeedIncrement, Vector3 aPosition, Quaternion aRotation)
     {
-        GameObject bulletObject = Instantiate(GetBulletPrefabFromType(aBulletType), aPosition, aRotation, mBulletContainer);
+        GameObject bulletObject = Instantiate(GetBulletPrefabFromType(aBulletType), aPosition, aRotation, mBulletContainer.transform);
         Bullet bulletComponent = bulletObject.GetComponent<Bullet>();
         bulletComponent.Spawner = this;
         bulletComponent.GetComponent<Bullet>().IncrementSpeed(aSpeedIncrement);

@@ -23,7 +23,7 @@ public class OSTController : MonoBehaviour
         mEnemyManager = mEnemy.GetComponent<EnemyManager>();
     }
 
-private void LoadAudios()
+    private void LoadAudios()
     {
         string[] playAudios = { "PlayAudio1", "PlayAudio2" };
         mPlayGameAudios = new AudioSource[playAudios.Length];
