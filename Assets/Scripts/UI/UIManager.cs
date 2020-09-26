@@ -62,6 +62,7 @@ public class UIManager : MonoBehaviour
         if (mGameManager.CurrentGameState == GameManagerSC.GameState.Playing)
         {
             scoreText.text = BeautyScore(mGameManager.score).ToString();
+            scoreText.color = ComputeScoreColor();
         }
        
     }
@@ -98,6 +99,17 @@ public class UIManager : MonoBehaviour
 
         scoreString = ("00000").Substring(scoreString.Length) + scoreString;
         return scoreString;
+    }
+    private Color ComputeScoreColor()
+    {
+        var enemyManager = mEnemy.GetComponent<EnemyManager>();
+
+        float IncrementScale = (float)enemyManager.GetNumIncrements() / (float)enemyManager.mMaxSpeedIncrements;
+        Color result = Color.white;
+        result.g = 1.0f - IncrementScale;
+        result.b = 1.0f - IncrementScale;
+        //TODO play with other color range instead with just red 
+        return result;
     }
 
     private void SwitchPanel()

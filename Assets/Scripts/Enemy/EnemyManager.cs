@@ -24,8 +24,13 @@ public class EnemyManager : MonoBehaviour
 
     public float GetSpeedIncrement()
     {
-        int numIncrements = Mathf.Min(Mathf.FloorToInt((Time.time - mGameTime) / mSpeedIncrementSeconds), mMaxSpeedIncrements);
+        int numIncrements = GetNumIncrements();
         return numIncrements * mSpeedIncrement;
+    }
+
+    public int GetNumIncrements()
+    {
+        return Mathf.Min(Mathf.FloorToInt((Time.time - mGameTime) / mSpeedIncrementSeconds), mMaxSpeedIncrements);
     }
 
     // Update is called once per frame
