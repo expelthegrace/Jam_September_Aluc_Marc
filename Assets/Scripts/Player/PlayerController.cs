@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private const string EnemyTag = "Enemy";
 
     [SerializeField] private bool mCanDie = false;
+    
+    private bool mSlowMovement;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +20,7 @@ public class PlayerController : MonoBehaviour
         mRigidBody = GetComponent<Rigidbody2D>();
         GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
         GameManagerSC.EventGameEnded.AddListener(OnEventEndGame);
+        mSlowMovement = false;
     }
 
     private void OnEventStartGame()
@@ -29,14 +33,20 @@ public class PlayerController : MonoBehaviour
     {
         mRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
-    
-    void FixedUpdate()
-    {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
 
-        float speed = Input.GetKey(KeyCode.LeftShift) ? mSpeed * 0.5f : mSpeed;
+    public void OnInputEventMove(InputAction.CallbackContext context)
+    {
+        Vector2 inputValue = context.ReadValue<Vector2>();
+        float horizontal = inputValue.x;
+        float vertical = inputValue.y;
+
+        float speed = mSlowMovement ? mSpeed * 0.5f : mSpeed;
         mRigidBody.velocity = new Vector3(horizontal * speed, vertical * speed, 0.0f);
+    }
+    
+    public void OnInputEventSlowMovement(InputAction.CallbackContext context)
+    {
+        mSlowMovement = context.performed;
     }
 
     void OnCollisionEnter2D(Collision2D aCollision)

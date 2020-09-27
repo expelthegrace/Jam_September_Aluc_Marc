@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class ShieldManager : MonoBehaviour
 {
@@ -71,7 +72,7 @@ public class ShieldManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void OnInputEventShield(InputAction.CallbackContext context)
     {
         if (CanGenerateShield())
         {
@@ -107,6 +108,7 @@ public class ShieldManager : MonoBehaviour
 
     private bool CanGenerateShield()
     {
-        return Input.GetKeyDown(KeyCode.E) && mCooldownTimeout;
+        return mCooldownTimeout;
     }
+
 }

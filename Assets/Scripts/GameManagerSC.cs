@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class GameManagerSC : MonoBehaviour
 {
@@ -79,16 +80,5 @@ public class GameManagerSC : MonoBehaviour
     public void Update()
     {
         if (!mEarlyInvoked) EarlyEventInvoke();
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            GoToGameState(GameState.Playing);
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            GoToGameState(GameState.NotPlaying);
-        }
     }
-
-
 }
