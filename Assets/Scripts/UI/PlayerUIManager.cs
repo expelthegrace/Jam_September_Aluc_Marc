@@ -8,6 +8,9 @@ public class PlayerUIManager : MonoBehaviour
 
     public Image coolDownImageBar;
 
+    private float mInitialAlphaBar;
+    private float mInitialAlphaShieldImage;
+
     public GameObject mPlayer;
     private ShieldManager mPlayerShieldManager;
 
@@ -19,15 +22,23 @@ public class PlayerUIManager : MonoBehaviour
         mPlayerShieldManager = mPlayer.GetComponent<ShieldManager>();
         ShieldManager.EventShieldCooldownStarted.AddListener(StartShieldCooldown);
         GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
+
+        mInitialAlphaBar = coolDownImageBar.color.a;
     }
 
     private void OnEventStartGame()
     {
         coolDownImageBar.fillAmount = 1.0f;
+
+        coolDownImageBar.color = new Color(coolDownImageBar.color.r, coolDownImageBar.color.g, coolDownImageBar.color.b, mInitialAlphaBar);
+
     }
 
     private void StartShieldCooldown()
     {
+
+        coolDownImageBar.color = new Color(coolDownImageBar.color.r, coolDownImageBar.color.g, coolDownImageBar.color.b, mInitialAlphaBar / 2f);
+
         if (mCooldownImageCoroutine != null)
         {
             StopCoroutine(mCooldownImageCoroutine);
@@ -46,6 +57,8 @@ public class PlayerUIManager : MonoBehaviour
             coolDownImageBar.fillAmount = (Time.time - startTime) / coolDownDuration;
             yield return null;
         }
+
+        coolDownImageBar.color = new Color(coolDownImageBar.color.r, coolDownImageBar.color.g, coolDownImageBar.color.b, mInitialAlphaBar);
     }
 
     // Update is called once per frame
