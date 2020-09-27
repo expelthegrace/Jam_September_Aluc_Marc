@@ -1167,6 +1167,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 730c9518-440c-4f23-bc29-1298cf139555
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1413287093}
+        m_MethodName: OnInputEventStartGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ea4388f0-bc1a-4318-b15a-8f07e014e770
+    m_ActionName: Player/StartGame[/XInputControllerWindows/buttonSouth,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

@@ -81,4 +81,9 @@ public class GameManagerSC : MonoBehaviour
     {
         if (!mEarlyInvoked) EarlyEventInvoke();
     }
+
+    public void OnInputEventStartGame(InputAction.CallbackContext context)
+    {
+        PlayButton();
+    }
 }
