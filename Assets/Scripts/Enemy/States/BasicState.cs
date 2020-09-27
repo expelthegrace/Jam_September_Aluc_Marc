@@ -41,7 +41,7 @@ public class BasicState : EnemyState
 
     public override void HandleStart()
     {
-        gameObject.transform.position = new Vector3(0, 0, 0);
+        gameObject.transform.position = new Vector3(-6, 0, 0);
         mDurationTime = 5f;
         nameState = "'Normal' Mode";
         mStateID = 0;

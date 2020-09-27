@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEventStartGame()
     {
+        gameObject.transform.position = new Vector3(6, 0, 0);
         mRigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
