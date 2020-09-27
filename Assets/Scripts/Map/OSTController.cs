@@ -4,77 +4,66 @@ using UnityEngine;
 
 public class OSTController : MonoBehaviour
 {
-    [SerializeField] private float mInitialVolume = 0.3f;
-    private AudioSource mMenuAudio;
-    private AudioSource[] mPlayGameAudios;
-    private int mPlayGamePlayingAudioIndex;
     [SerializeField] private GameObject mEnemy;
     private EnemyManager mEnemyManager;
+
+    private AudioSource mMainAudio;
+    [SerializeField] private float mInitialVolume = 0.7f;
     [SerializeField] private float mPitchIncrementStep = 0.5f;
     [SerializeField] private float mVolumeIncrementStep = 1.0f;
+
+    private bool mCanModfifyAudio;
 
     // Start is called before the first frame update
     void Start()
     {
-        LoadAudios();
-        mPlayGamePlayingAudioIndex = -1;
+        mCanModfifyAudio = false;
+        LoadAudio();
         GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
         GameManagerSC.EventGameEnded.AddListener(OnEventEndGame);
         mEnemyManager = mEnemy.GetComponent<EnemyManager>();
     }
 
-    private void LoadAudios()
+    private void LoadAudio()
     {
-        string[] playAudios = { "PlayAudio1", "PlayAudio2" };
-        mPlayGameAudios = new AudioSource[playAudios.Length];
-        //foreach (int i = 0; i <  string audioObjectName in playAudios)
-        for (int i = 0; i < playAudios.Length; ++i)
-        {
-            string audioObjectName = playAudios[i];
-            AudioSource audio = GameObject.Find(audioObjectName).GetComponent<AudioSource>();
-            audio.volume = mInitialVolume;
-            if (audioObjectName == null)
-            {
-                Debug.LogWarning("no audio for playing game" + audioObjectName + " found");
-            }
-            else
-            {
-                mPlayGameAudios[i] = audio;
-            }
-        }
-
-        mMenuAudio = GameObject.Find("MenuAudio").GetComponent<AudioSource>();
-        if (mMenuAudio == null) Debug.Log("no audio for menu found");
+        mMainAudio = gameObject.GetComponent<AudioSource>();
+        if (mMainAudio == null) Debug.Log("No main audio found");
+        mMainAudio.volume = mInitialVolume;
     }
 
     private void OnEventStartGame()
     {
-        mMenuAudio.Stop();
-
-        mPlayGamePlayingAudioIndex = Random.Range(0, mPlayGameAudios.Length);
-        mPlayGameAudios[mPlayGamePlayingAudioIndex].Play();
+        StopCoroutine(ResetSettings());
+        mCanModfifyAudio = true;
+        mMainAudio.volume = mInitialVolume;
+        mMainAudio.pitch = 1;
     }
 
     private void OnEventEndGame()
     {
-        if (mPlayGamePlayingAudioIndex != -1)
-        {
-            mPlayGameAudios[mPlayGamePlayingAudioIndex].Stop();
-            mPlayGamePlayingAudioIndex = -1;
-        }       
-
-        //TODO game over??
-        mMenuAudio.Play(); 
+        mCanModfifyAudio = false;
+        StartCoroutine(ResetSettings());
     }
 
-    // Update is called once per frame
+    private IEnumerator ResetSettings()
+    {
+        float startTime = Time.time;
+
+        while (mMainAudio.volume > mInitialVolume || mMainAudio.pitch > 1)
+        {
+            mMainAudio.volume = Mathf.Max(mInitialVolume, mMainAudio.volume - 0.01f);
+            mMainAudio.pitch = Mathf.Max(1, mMainAudio.pitch - 0.001f);
+            yield return null;
+        }
+    }
+
     void Update()
     {
-        if (mPlayGamePlayingAudioIndex != -1)
+        if (mCanModfifyAudio)
         {
             float incrementScale = mEnemyManager.GetSpeedIncrementScale() * 10;
-            mPlayGameAudios[mPlayGamePlayingAudioIndex].pitch = 1 + incrementScale * mPitchIncrementStep;
-            mPlayGameAudios[mPlayGamePlayingAudioIndex].volume = mInitialVolume + incrementScale * mVolumeIncrementStep;
-        }
+            mMainAudio.pitch = 1 + incrementScale * mPitchIncrementStep;
+            mMainAudio.volume = mInitialVolume + incrementScale * mVolumeIncrementStep;
+        }        
     }
 }
