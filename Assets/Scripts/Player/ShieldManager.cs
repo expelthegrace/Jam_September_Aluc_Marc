@@ -79,6 +79,7 @@ public class ShieldManager : MonoBehaviour
             ResetShield();
 
             mEquipShieldAudio.Play();
+            CameraAnimation.Shake(0.08f, 0.09f);
 
             float shielRadius = Mathf.Max(gameObject.GetComponent<SpriteRenderer>().bounds.size.x, gameObject.GetComponent<SpriteRenderer>().bounds.size.y) + mRadiusFromGameObject;
             float angleIncrement = (2.0f * Mathf.PI)/ mPartsNum;

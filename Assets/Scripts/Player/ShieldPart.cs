@@ -36,5 +36,6 @@ public class ShieldPart : MonoBehaviour
         }
         mCristalAudio.pitch = Random.Range(0.9f, 1.1f);
         mCristalAudio.Play();
+        CameraAnimation.Shake(0.03f, 0.1f);
     }
 }

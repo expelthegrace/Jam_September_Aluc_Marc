@@ -44,6 +44,8 @@ public class SurpriseState : BasicState
         mStateID = 3;
         mBulletType = BulletSpawner.eBulletType.Normal;
 
+        CameraAnimation.Shake();
+
         mExtraEnemy.SetActive(true);
         float minDistance = float.PositiveInfinity;
         Vector3 spawnPosition = Vector3.zero;
