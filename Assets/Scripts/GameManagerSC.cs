@@ -86,4 +86,9 @@ public class GameManagerSC : MonoBehaviour
     {
         PlayButton();
     }
+
+    public void ExitButton()
+    {
+        Application.Quit();
+    }
 }
