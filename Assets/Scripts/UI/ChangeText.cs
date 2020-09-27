@@ -21,5 +21,9 @@ using UnityEngine.UI;
     {
         myText.color = Color.black;
     }
+    public void OnDisable()
+    {
+        myText.color = Color.black;
+    }
 }
 

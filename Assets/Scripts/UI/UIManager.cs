@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject mPlayingPanel;
     public GameObject mNotPlayingPanel;
+    public GameObject mHowToPanel;
 
     public Image blurPanel;
 
@@ -43,6 +44,8 @@ public class UIManager : MonoBehaviour
         var tempColor = blurPanel.color;
         tempColor.a = 0;
         blurPanel.color = tempColor;
+
+        BackToMenuFromHowToPlay();
     }
 
     public void OnEventGameStarted()
@@ -168,6 +171,18 @@ public class UIManager : MonoBehaviour
 
             yield return null;
         }     
+    }
+
+    public void BackToMenuFromHowToPlay()
+    {
+        mHowToPanel.SetActive(false);
+        mNotPlayingPanel.SetActive(true);
+    }
+
+    public void GoToHowToPlay()
+    {
+        mHowToPanel.SetActive(true);
+        mNotPlayingPanel.SetActive(false);
     }
 
 }
