@@ -20,6 +20,8 @@ public class EnemyManager : MonoBehaviour
     void OnEventStartGame()
     {
         mGameTime = Time.time;
+        gameObject.transform.position = new Vector3(-6, 0, 0);
+
     }
 
     public float GetSpeedIncrement()
