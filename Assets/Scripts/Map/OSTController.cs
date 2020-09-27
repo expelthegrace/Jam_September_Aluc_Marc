@@ -14,6 +14,8 @@ public class OSTController : MonoBehaviour
 
     private bool mCanModfifyAudio;
 
+    private Coroutine mResetSettingsCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,10 @@ public class OSTController : MonoBehaviour
 
     private void OnEventStartGame()
     {
-        StopCoroutine(ResetSettings());
+        if (mResetSettingsCoroutine != null)
+        {
+            StopCoroutine(mResetSettingsCoroutine);
+        }
         mCanModfifyAudio = true;
         mMainAudio.volume = mInitialVolume;
         mMainAudio.pitch = 1;
@@ -42,7 +47,7 @@ public class OSTController : MonoBehaviour
     private void OnEventEndGame()
     {
         mCanModfifyAudio = false;
-        StartCoroutine(ResetSettings());
+        mResetSettingsCoroutine = StartCoroutine(ResetSettings());
     }
 
     private IEnumerator ResetSettings()

@@ -11,6 +11,8 @@ public class PlayerUIManager : MonoBehaviour
     public GameObject mPlayer;
     private ShieldManager mPlayerShieldManager;
 
+    private Coroutine mCooldownImageCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +28,11 @@ public class PlayerUIManager : MonoBehaviour
 
     private void StartShieldCooldown()
     {
-        StopCoroutine(UpdateCooldownImage());
-        StartCoroutine(UpdateCooldownImage());
+        if (mCooldownImageCoroutine != null)
+        {
+            StopCoroutine(mCooldownImageCoroutine);
+        }
+        mCooldownImageCoroutine = StartCoroutine(UpdateCooldownImage());
     }
 
     private IEnumerator UpdateCooldownImage()

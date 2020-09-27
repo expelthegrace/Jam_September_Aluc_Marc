@@ -21,6 +21,8 @@ public class ShieldManager : MonoBehaviour
 
     private List<GameObject> mParts;
 
+    private Coroutine mUpdateCooldownCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class ShieldManager : MonoBehaviour
         if (mEquipShieldAudio == null) Debug.Log("no quip shield audio found");
 
         GameManagerSC.EventGameStarted.AddListener(OnEventStartGame);
+        GameManagerSC.EventGameEnded.AddListener(OnEventEndGame);
     }
 
     private void OnEventStartGame()
@@ -37,12 +40,23 @@ public class ShieldManager : MonoBehaviour
         mCooldownTimeout = true;
         ResetShield();
     }
+    
+    private void OnEventEndGame()
+    {
+        if (mUpdateCooldownCoroutine != null)
+        {
+            StopCoroutine(mUpdateCooldownCoroutine);
+        }
+    }
 
     private void StartShieldCooldown()
     {
+        if (mUpdateCooldownCoroutine != null)
+        {
+            StopCoroutine(mUpdateCooldownCoroutine);
+        }
+        mUpdateCooldownCoroutine = StartCoroutine(UpdateCooldown());
         mCooldownTimeout = false;
-        StopCoroutine(UpdateCooldown());
-        StartCoroutine(UpdateCooldown());
         EventShieldCooldownStarted.Invoke();
     }
 

@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     public Text mYourScoreText;
     public Button mPlayButton;
 
+    private Coroutine mCountdownImageCoroutine;
     // Start is called before the first frame update
     void Start()
     {
@@ -70,8 +71,11 @@ public class UIManager : MonoBehaviour
 
     private void StartCountdownnImage()
     {
-        StopCoroutine(UpdateCountdownImage());
-        StartCoroutine(UpdateCountdownImage());
+        if (mCountdownImageCoroutine != null)
+        {
+            StopCoroutine(mCountdownImageCoroutine);
+        }
+        mCountdownImageCoroutine = StartCoroutine(UpdateCountdownImage());
     }
 
     private IEnumerator UpdateCountdownImage()

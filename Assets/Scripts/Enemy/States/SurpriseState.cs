@@ -16,6 +16,7 @@ public class SurpriseState : BasicState
 
     private AudioSource mAppearAudio;
 
+    private List<Coroutine> mShootCoroutines;
     public void Start()
     {
         mExtraEnemy = GameObject.Find("SurpriseEnemy");
@@ -31,6 +32,8 @@ public class SurpriseState : BasicState
 
         mAppearAudio = GameObject.Find("AppearAudio").GetComponent<AudioSource>();
         if (mAppearAudio == null) Debug.Log("No audio for surprise appear found");
+
+        mShootCoroutines = new List<Coroutine>();
 
         mExtraEnemy.SetActive(false);
     }
@@ -67,7 +70,11 @@ public class SurpriseState : BasicState
     public override void HandleExit() 
     {
         mExtraEnemy.SetActive(false);
-        StopCoroutine(ShootBurst());
+        foreach (Coroutine shootCorrotuine in mShootCoroutines)
+        {
+            StopCoroutine(shootCorrotuine);
+        }
+        mShootCoroutines.Clear();
     }
 
     public override EnemyState StateUpdate()
@@ -90,7 +97,7 @@ public class SurpriseState : BasicState
         if (Time.time - mLastTimeShootedExtraEnemy > mTimeBetweenShootingExtraEnemy)
         {
             mLastTimeShootedExtraEnemy = Time.time;
-            StartCoroutine(ShootBurst());
+            mShootCoroutines.Add(StartCoroutine(ShootBurst()));
             CameraAnimation.Shake(0.03f, mBulletsPerShootingExtraEnemy * mTimeBetweenBulletExtraEnemy);
         }
     }
