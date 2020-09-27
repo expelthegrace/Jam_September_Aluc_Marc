@@ -151,7 +151,7 @@ public class BasicState : EnemyState
         {
             mLastTimeShooted = Time.time;
             StartCoroutine(ShootBurst());
-            CameraAnimation.Shake(0.01f, mBulletsPerShooting * mTimeBetweenBullet);
+            CameraAnimation.Shake(0.015f, mBulletsPerShooting * mTimeBetweenBullet);
         }
     }
 
