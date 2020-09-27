@@ -44,11 +44,12 @@ public class SurpriseState : BasicState
         mExtraEnemy.SetActive(true);
         float minDistance = float.PositiveInfinity;
         Vector3 spawnPosition = Vector3.zero;
-        float playerMaxSize = Mathf.Max(mPlayer.GetComponent<SpriteRenderer>().bounds.size.x, mPlayer.GetComponent<SpriteRenderer>().bounds.size.y);
+        float minDistanceToPlayer = Mathf.Max(mPlayer.GetComponent<SpriteRenderer>().bounds.size.x, mPlayer.GetComponent<SpriteRenderer>().bounds.size.y) +
+                                    Mathf.Max(mExtraEnemy.GetComponent<SpriteRenderer>().bounds.size.x, mExtraEnemy.GetComponent<SpriteRenderer>().bounds.size.y);
         foreach (Vector3 position in mSpawnPoints)
         {
             float currentPositionDistance = Vector3.Distance(mPlayer.transform.position, position);
-            if (currentPositionDistance < minDistance && currentPositionDistance > playerMaxSize)
+            if (currentPositionDistance < minDistance && currentPositionDistance > minDistanceToPlayer)
             {
                 minDistance = currentPositionDistance;
                 spawnPosition = position;
@@ -63,14 +64,18 @@ public class SurpriseState : BasicState
         base.BasicStart();
     }
 
+    public override void HandleExit() 
+    {
+        mExtraEnemy.SetActive(false);
+        StopCoroutine(ShootBurst());
+    }
+
     public override EnemyState StateUpdate()
     {
         mTimeStateActive = Time.time - mTimeStateActivated;
 
         if (mTimeStateActive > mDurationTime)
         {
-            mExtraEnemy.SetActive(false);
-            StopCoroutine(ShootBurst());
             return GetRandomState();
         }
 

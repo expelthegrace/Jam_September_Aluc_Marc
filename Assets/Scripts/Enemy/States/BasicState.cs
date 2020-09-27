@@ -131,7 +131,6 @@ public class BasicState : EnemyState
        
     }
 
-
     private IEnumerator Turn(float aAngle, float aTime)
     {
         float startTime = Time.time;
@@ -211,9 +210,9 @@ public class BasicState : EnemyState
             case 0:
                 return gameObject.GetComponent<BasicState>();
             case 1:
-                return gameObject.GetComponent<DivideShotState>();
+                //return gameObject.GetComponent<DivideShotState>();
             case 2:
-                return gameObject.GetComponent<MoreShotsState>();
+                //return gameObject.GetComponent<MoreShotsState>();
             case 3:
                 return gameObject.GetComponent<SurpriseState>();
         }
