@@ -6226,9 +6226,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 97fc8e0666542f9409febf223127d478, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0e7bb06b7814de54bbdd71d15d4eb0fd, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.749
+  m_Volume: 0.18
   m_Pitch: 0.61
   Loop: 0
   Mute: 0
@@ -6610,7 +6610,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.6
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
